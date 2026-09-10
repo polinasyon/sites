@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /
+
+# İsteğe bağlı: Eğer daha önce sitemap eklediyseniz arama motorlarının kafasını karıştırmamak için sitemap satırını kaldırın veya yorum satırı yapın.
