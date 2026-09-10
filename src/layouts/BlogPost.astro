@@ -29,10 +29,14 @@ const imageSrc = heroImage
 		<BaseHead title={title} description={description} />
 	</head>
 
-	<body class="bg-gray-200/50 text-gray-900 m-0 p-0 antialiased min-h-screen flex flex-col">
-		<Header />
+	<body class="bg-gray-200/50 text-gray-900 m-0 p-0 antialiased min-h-screen flex flex-col relative z-0">
 		
-		<!-- Ana içerik alanı z-10 düzeyinde tutuldu -->
+		<!-- Üst menü z-99 koruma katmanına alınarak tüm panellerin en üstüne kilitlendi -->
+		<div class="sticky top-0 z-99 w-full bg-white shadow-xs">
+			<Header />
+		</div>
+		
+		<!-- Ana içerik alanı dengeli bir katmanda akar -->
 		<main class="flex-grow max-w-4xl mx-auto px-6 py-12 w-full space-y-10 relative z-10">
 			<article class="bg-white border border-gray-100 rounded-2xl p-6 sm:p-10 shadow-xl space-y-8">
 				
@@ -83,11 +87,8 @@ const imageSrc = heroImage
 				</div>
 			)}
 
-			<!-- 
-			  İKİ KATLI LÜKS BANNER YORUM MODÜLÜ 
-			  z-50 değeri z-40'a çekilerek üst menünün (Header z-50) arkasında kalması sağlandı!
-			-->
-			<div class="w-full space-y-6 relative z-40 pointer-events-auto">
+			<!-- İKİ KATLI LÜKS BANNER YORUM MODÜLÜ (Header'ın arkasından akacak şekilde z-20'ye çekildi) -->
+			<div class="w-full space-y-6 relative z-20 pointer-events-auto">
 				
 				<div class="w-full bg-gray-50/70 border border-gray-200/50 rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col items-center justify-center text-center">
 					<div class="space-y-3 max-w-md mx-auto flex flex-col items-center">
@@ -102,7 +103,7 @@ const imageSrc = heroImage
 				</div>
 
 				<!-- GİRİŞ ZORUNLULUĞU OLMAYAN PREMİUM YAZMA ALANI -->
-				<div class="w-full bg-gray-50/70 border border-gray-200/50 rounded-xl p-6 sm:p-8 shadow-md hover:shadow-xl transition-all duration-300 relative z-40 pointer-events-auto">
+				<div class="w-full bg-gray-50/70 border border-gray-200/50 rounded-xl p-6 sm:p-8 shadow-md hover:shadow-xl transition-all duration-300 relative z-20 pointer-events-auto">
 					<div class="space-y-4">
 						<div class="w-full sm:w-1/3">
 							<input type="text" id="comment-name-input" class="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm font-semibold focus:outline-none focus:border-amber-500 shadow-3xs text-gray-800" placeholder="İsim (Opsiyonel)" />
@@ -110,7 +111,7 @@ const imageSrc = heroImage
 						<textarea id="local-comment-box" rows="4" class="w-full p-4 bg-white border border-gray-200 rounded-xl text-sm font-medium focus:outline-none focus:border-amber-500 shadow-3xs resize-none text-gray-800" placeholder="Yorumunuzu buraya yazın..."></textarea>
 						<div class="flex justify-between items-center">
 							<span class="text-xs text-gray-400 font-semibold">🔒 PoliNASYON Güvenli Altyapısı</span>
-							<button id="submit-comment-btn" class="px-5 py-2.5 bg-neutral-900 text-white rounded-xl text-sm font-bold hover:bg-amber-500 hover:text-neutral-950 transition-all shadow-xs cursor-pointer relative z-40">Yorumu Gönder</button>
+							<button id="submit-comment-btn" class="px-5 py-2.5 bg-neutral-900 text-white rounded-xl text-sm font-bold hover:bg-amber-500 hover:text-neutral-950 transition-all shadow-xs cursor-pointer relative z-20">Yorumu Gönder</button>
 						</div>
 					</div>
 					<div id="comments-stream-container" class="mt-6 space-y-4 empty:hidden pt-4 border-t border-gray-200/50"></div>
@@ -121,20 +122,44 @@ const imageSrc = heroImage
 
 		<Footer />
 
-	<script src="https://giscus.app/client.js"
-        data-repo="polinasyon/sites"
-        data-repo-id="R_kgDOUUv_wQ"
-        data-category="General"
-        data-category-id="DIC_kwDOUUv_wc4DFTIR"
-        data-mapping="pathname"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="bottom"
-        data-theme="preferred_color_scheme"
-        data-lang="tr"
-        crossorigin="anonymous"
-        async>
-</script>
+		<!-- Hafızalı ve Giscus Altyapısına Hazır Entegre Yorum Motoru -->
+		<script is:inline>
+			const nameInput = document.getElementById('comment-name-input');
+			const commentBox = document.getElementById('local-comment-box');
+			const submitBtn = document.getElementById('submit-comment-btn');
+			const streamContainer = document.getElementById('comments-stream-container');
+			const storageKey = 'comments_' + window.location.pathname;
+
+			function loadStoredComments() {
+				const savedComments = JSON.parse(localStorage.getItem(storageKey) || '[]');
+				savedComments.forEach(c => renderComment(c.name, c.text, c.date));
+			}
+
+			function renderComment(name, text, date) {
+				const commentElement = document.createElement('div');
+				commentElement.className = "p-4 bg-white border border-gray-100 rounded-xl shadow-xs space-y-1.5 text-left";
+				commentElement.innerHTML = `
+					<div class="flex justify-between items-center">
+						<span class="text-xs font-black text-gray-900 bg-gray-100 px-2.5 py-0.5 rounded-md">🐝 ${name}</span>
+						<span class="text-[10px] text-gray-400 font-bold">${date}</span>
+					</div>
+					<p class="text-sm text-gray-600 font-medium m-0 pt-1 leading-relaxed break-words">${text}</p>
+				`;
+				streamContainer?.prepend(commentElement);
+			}
+
+			submitBtn?.addEventListener('click', () => {
+				const commentText = commentBox?.value.trim();
+				let userName = nameInput?.value.trim() || 'Polinasyon Misafiri';
+				if (!commentText) { alert('Lütfen boş yorum göndermeyin.'); return; }
+				const today = new Date().toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+				renderComment(userName, commentText, today);
+				const savedComments = JSON.parse(localStorage.getItem(storageKey) || '[]');
+				savedComments.push({ name: userName, text: commentText, date: today });
+				localStorage.setItem(storageKey, JSON.stringify(savedComments));
+				if (commentBox) commentBox.value = '';
+			});
+			loadStoredComments();
+		</script>
 	</body>
 </html>
