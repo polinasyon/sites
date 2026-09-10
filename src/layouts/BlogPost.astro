@@ -121,43 +121,20 @@ const imageSrc = heroImage
 
 		<Footer />
 
-		<script is:inline>
-			const nameInput = document.getElementById('comment-name-input');
-			const commentBox = document.getElementById('local-comment-box');
-			const submitBtn = document.getElementById('submit-comment-btn');
-			const streamContainer = document.getElementById('comments-stream-container');
-			const storageKey = 'comments_' + window.location.pathname;
-
-			function loadStoredComments() {
-				const savedComments = JSON.parse(localStorage.getItem(storageKey) || '[]');
-				savedComments.forEach(c => renderComment(c.name, c.text, c.date));
-			}
-
-			function renderComment(name, text, date) {
-				const commentElement = document.createElement('div');
-				commentElement.className = "p-4 bg-white border border-gray-100 rounded-xl shadow-xs space-y-1.5";
-				commentElement.innerHTML = `
-					<div class="flex justify-between items-center">
-						<span class="text-xs font-black text-gray-900 bg-gray-100 px-2.5 py-0.5 rounded-md">🐝 ${name}</span>
-						<span class="text-[10px] text-gray-400 font-bold">${date}</span>
-					</div>
-					<p class="text-sm text-gray-600 font-medium m-0 pt-1 leading-relaxed break-words">${text}</p>
-				`;
-				streamContainer?.prepend(commentElement);
-			}
-
-			submitBtn?.addEventListener('click', () => {
-				const commentText = commentBox?.value.trim();
-				let userName = nameInput?.value.trim() || 'Polinasyon Misafiri';
-				if (!commentText) { alert('Lütfen boş yorum göndermeyin.'); return; }
-				const today = new Date().toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-				renderComment(userName, commentText, today);
-				const savedComments = JSON.parse(localStorage.getItem(storageKey) || '[]');
-				savedComments.push({ name: userName, text: commentText, date: today });
-				localStorage.setItem(storageKey, JSON.stringify(savedComments));
-				if (commentBox) commentBox.value = '';
-			});
-			loadStoredComments();
-		</script>
+	<script src="https://giscus.app/client.js"
+        data-repo="polinasyon/sites"
+        data-repo-id="R_kgDOUUv_wQ"
+        data-category="General"
+        data-category-id="DIC_kwDOUUv_wc4DFTIR"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="tr"
+        crossorigin="anonymous"
+        async>
+</script>
 	</body>
 </html>
