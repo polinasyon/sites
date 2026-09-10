@@ -1,5 +1,5 @@
 ---
-// Blog Modülü - En Kararlı Sürüm Uyumlu Yapı (Tam Net Amber Hover Efektli)
+// Blog Modülü - Ana Sayfa İle Birebir Aynı Amber Renk Kodlu Sürüm (#f59e0b)
 interface Props {
 	posts: any[];
 }
@@ -20,7 +20,7 @@ const { posts } = Astro.props;
 					: null;
 
 				return (
-					<article class="blog-post-card flex flex-col md:flex-row gap-6 p-5 bg-white border-2 border-transparent rounded-xl shadow-xs transition-all duration-300 ease-out hover:border-amber-500 hover:-translate-y-1 hover:shadow-md group">
+					<article class="blog-post-card flex flex-col md:flex-row gap-6 p-5 bg-white border-2 border-transparent rounded-xl shadow-xs transition-all duration-300 ease-out hover:border-[#f59e0b] hover:-translate-y-1 hover:shadow-md group">
 						
 						<!-- Dikdörtgen Resimli Ön İzleme -->
 						<div class="w-full md:w-48 h-32 rounded-lg overflow-hidden bg-gray-200 shrink-0 flex items-center justify-center">
@@ -42,12 +42,12 @@ const { posts } = Astro.props;
 						<!-- Metin İçerikleri -->
 						<div class="flex flex-col justify-between space-y-2 flex-grow">
 							<div class="space-y-1">
-								<span class="text-xs font-semibold text-amber-600">
+								<span class="text-xs font-semibold text-[#f59e0b]">
 									{post.data.pubDate ? new Date(post.data.pubDate).toLocaleDateString('tr-TR', { 
 										year: 'numeric', month: 'long', day: 'numeric' 
 									}) : ''}
 								</span>
-								<h3 class="text-xl font-bold text-gray-900 m-0 group-hover:text-amber-500 transition-colors">
+								<h3 class="text-xl font-bold text-gray-900 m-0 group-hover:text-[#f59e0b] transition-colors">
 									{post.data.title}
 								</h3>
 								<p class="text-sm text-gray-600 leading-relaxed m-0 pt-1">
@@ -55,7 +55,7 @@ const { posts } = Astro.props;
 								</p>
 							</div>
 							
-							<a href={`/blog/${post.id || post.slug}/`} class="inline-flex items-center text-sm font-bold text-neutral-900 hover:text-amber-500 no-underline transition-colors mt-2">
+							<a href={`/blog/${post.id || post.slug}/`} class="inline-flex items-center text-sm font-bold text-neutral-900 hover:text-[#f59e0b] no-underline transition-colors mt-2">
 								Devamını Oku →
 							</a>
 						</div>
@@ -68,10 +68,11 @@ const { posts } = Astro.props;
 		)}
 	</div>
 
-	<!-- ALT NAVİGASYON: AMBER GÖLGELİ VE ARKA PLAN KORUMALI Minimalist Ok Alanı -->
+	<!-- ALT NAVİGASYON: GERÇEK AMBER RENK KODLU BUTONLAR (#f59e0b) -->
 	<div id="blog-pagination" class="flex items-center justify-between mt-8 pt-6 border-t border-gray-100">
+		
 		<!-- Sol Ok Butonu -->
-		<button id="btn-prev-page" class="w-10 h-10 flex items-center justify-center bg-neutral-900 text-white rounded-xl hover:bg-amber-500 hover:text-neutral-950 hover:border-amber-500 transition-all duration-200 disabled:opacity-30 cursor-pointer shadow-xs shrink-0 border border-transparent" aria-label="Önceki Sayfa">
+		<button id="btn-prev-page" class="w-10 h-10 flex items-center justify-center bg-neutral-900 text-white rounded-xl transition-all duration-200 disabled:opacity-30 cursor-pointer shadow-xs shrink-0 border border-transparent hover:bg-[#f59e0b] hover:text-neutral-950 hover:border-[#f59e0b] outline-none! focus:outline-none!" aria-label="Önceki Sayfa">
 			<svg xmlns="http://w3.org" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
 				<path d="M15 18l-6-6 6-6"/>
 			</svg>
@@ -81,10 +82,11 @@ const { posts } = Astro.props;
 		<span id="blog-page-info" class="text-xs font-black tracking-wider text-gray-400 uppercase bg-gray-100 px-3 py-1.5 rounded-lg border border-gray-200/30">Sayfa 1 / 1</span>
 		
 		<!-- Sağ Ok Butonu -->
-		<button id="btn-next-page" class="w-10 h-10 flex items-center justify-center bg-neutral-900 text-white rounded-xl hover:bg-amber-500 hover:text-neutral-950 hover:text-neutral-950 hover:border-amber-500 transition-all duration-200 disabled:opacity-30 cursor-pointer shadow-xs shrink-0 border border-transparent" aria-label="Sonraki Sayfa">
+		<button id="btn-next-page" class="w-10 h-10 flex items-center justify-center bg-neutral-900 text-white rounded-xl transition-all duration-200 disabled:opacity-30 cursor-pointer shadow-xs shrink-0 border border-transparent hover:bg-[#f59e0b] hover:text-neutral-950 hover:border-[#f59e0b] outline-none! focus:outline-none!" aria-label="Sonraki Sayfa">
 			<svg xmlns="http://w3.org" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
 				<path d="M9 18l6-6-6-6"/>
 			</svg>
 		</button>
+
 	</div>
 </div>
