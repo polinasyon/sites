@@ -31,12 +31,12 @@ const imageSrc = heroImage
 
 	<body class="bg-gray-200/50 text-gray-900 m-0 p-0 antialiased min-h-screen flex flex-col relative z-0">
 		
-		<!-- Üst menü z-99 koruma katmanına alınarak her şeyin en üstüne kilitlendi -->
+		<!-- Üst menü z-99 koruma katmanında kilitli -->
 		<div class="sticky top-0 z-99 w-full bg-white shadow-xs">
 			<Header />
 		</div>
 		
-		<!-- Ana içerik alanı dengeli bir katmanda akar -->
+		<!-- Ana içerik alanı -->
 		<main class="flex-grow max-w-4xl mx-auto px-6 py-12 w-full space-y-10 relative z-10">
 			<article class="bg-white border border-gray-100 rounded-2xl p-6 sm:p-10 shadow-xl space-y-8">
 				
@@ -60,26 +60,41 @@ const imageSrc = heroImage
 				</div>
 			</article>
 
-			<!-- İÇ LİNKLEME: BENZER YAYINLAR -->
+			<!-- 
+			  TAMAMEN MERKEZLENMİŞ BENZER YAYINLAR BANNER'I 
+			  Kırık etiketler düzeltildi, içerik ve kartlar tam ortalandı
+			-->
 			{relatedPosts && relatedPosts.length > 0 && (
-				div class="w-full bg-gray-50/70 border border-gray-200/50 rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col items-center justify-center text-center">
-					<div class="space-y-3 max-w-md mx-auto flex flex-col items-center">
-					<h3 class="text-lg font-black text-gray-900 m-0 flex items-center gap-2">📖 Bunlar da İlginizi Çekebilir</h3>
-					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+				<div class="w-full bg-gray-50/70 border border-gray-200/50 rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col items-center justify-center text-center space-y-5">
+					<div class="space-y-1.5 flex flex-col items-center">
+						<h3 class="text-lg font-black text-gray-900 m-0 flex items-center gap-2 justify-center">
+							CN 📑 Bunlar da İlginizi Çekebilir
+						</h3>
+						<p class="text-xs text-gray-400 font-bold uppercase tracking-wider m-0">PoliNASYON Bilgi ve Saha Kültürü</p>
+					</div>
+					
+					<!-- Kartların Genişliği Sınırlandı ve Kapsayıcı Tam Ortalandı -->
+					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-2xl mx-auto">
 						{relatedPosts.map((post) => {
 							const postImage = post.data.heroImage 
 								? (typeof post.data.heroImage === 'object' ? (post.data.heroImage as any).src : post.data.heroImage)
 								: 'https://githubusercontent.com';
 
 							return (
-								<a href={`/blog/${post.id || post.slug}/`} class="flex items-center gap-4 p-3 bg-white border-2 border-transparent rounded-lg shadow-2xs hover:border-amber-500 hover:-translate-y-0.5 hover:shadow-sm transition-all duration-300 group no-underline">
-									<div class="w-16 h-16 rounded-md overflow-hidden bg-gray-100 shrink-0">
-										<img src={postImage} alt={post.data.title} class="w-full h-full object-cover" />
+								<a href={`/blog/${post.id || post.slug}/`} class="flex items-center gap-4 p-3 bg-white border-2 border-transparent rounded-xl shadow-2xs hover:border-amber-500 hover:-translate-y-0.5 hover:shadow-sm transition-all duration-300 group no-underline text-left">
+									<div class="w-16 h-16 rounded-lg overflow-hidden bg-gray-100 shrink-0">
+										<img src={postImage} alt={post.data.title} class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
 									</div>
-									<div class="space-y-0.5 min-w-0">
-										<span class="text-[10px] font-bold text-amber-600">{new Date(post.data.pubDate).toLocaleDateString('tr-TR', { year: 'numeric', month: 'long' })}</span>
-										<h4 class="text-sm font-black text-gray-900 m-0 truncate group-hover:text-amber-500 transition-colors">{post.data.title}</h4>
-										<p class="text-xs text-gray-500 truncate m-0 font-medium">{post.data.description || 'Makaleyi inceleyin.'}</p>
+									<div class="space-y-0.5 min-w-0 flex-grow">
+										<span class="text-[10px] font-bold text-amber-600">
+											{new Date(post.data.pubDate).toLocaleDateString('tr-TR', { year: 'numeric', month: 'long' })}
+										</span>
+										<h4 class="text-sm font-black text-gray-900 m-0 truncate group-hover:text-amber-500 transition-colors">
+											{post.data.title}
+										</h4>
+										<p class="text-xs text-gray-500 truncate m-0 font-medium">
+											{post.data.description || 'Makaleyi inceleyin.'}
+										</p>
 									</div>
 								</a>
 							);
@@ -90,8 +105,6 @@ const imageSrc = heroImage
 
 			<!-- İKİ KATLI LÜKS BANNER CANLI KÜRESEL YORUM MODÜLÜ -->
 			<div class="w-full space-y-6 relative z-20 pointer-events-auto">
-				
-				<!-- 1. ÜST BANNER: Merkezlenmiş Başlık -->
 				<div class="w-full bg-gray-50/70 border border-gray-200/50 rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col items-center justify-center text-center">
 					<div class="space-y-3 max-w-md mx-auto flex flex-col items-center">
 						<div class="w-12 h-12 rounded-xl flex items-center justify-center bg-neutral-950 border border-neutral-900 p-2.5 shadow-md mb-1">
@@ -100,34 +113,34 @@ const imageSrc = heroImage
 							</svg>
 						</div>
 						<h3 class="text-xl font-black text-gray-900 m-0">Fikirleriniz Bizim İçin Değerli</h3>
+						<p class="text-xs font-bold text-amber-600 uppercase tracking-widest m-0">PoliNASYON Kültür ve Paylaşım Ağı</p>
 					</div>
 				</div>
 
-				<!-- 2. ALT BANNER: GERÇEK CANLI GISCUS YORUM ALANI -->
 				<div class="w-full bg-gray-50/70 border border-gray-200/50 rounded-xl p-6 sm:p-8 shadow-md hover:shadow-xl transition-all duration-300 relative z-20 pointer-events-auto">
 					<div class="giscus w-full"></div>
 				</div>
-
 			</div>
 		</main>
 
 		<Footer />
 
-		<!-- Giscus Canlı Küresel Yorum Motoru (Gerçek sites Deposu Kodlarınız Entegre Edildi) -->
-	<script src="https://giscus.app/client.js"
-        data-repo="polinasyon/sites"
-        data-repo-id="R_kgDOUUv_wQ"
-        data-category="General"
-        data-category-id="DIC_kwDOUUv_wc4DFTIR"
-        data-mapping="pathname"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="bottom"
-        data-theme="preferred_color_scheme"
-        data-lang="tr"
-        crossorigin="anonymous"
-        async>
-</script>
+		<!-- Giscus Canlı Küresel Yorum Motoru -->
+		<script is:inline
+			src="https://giscus.app"
+			data-repo="polinasyon/sites"
+			data-repo-id="R_kgDOUUv_wQ"
+			data-category="General"
+			data-category-id="DIC_kwDOUUv_wc4DFTIR"
+			data-mapping="pathname"
+			data-strict="0"
+			data-reactions-enabled="1"
+			data-emit-metadata="0"
+			data-input-position="bottom"
+			data-theme="light"
+			data-lang="tr"
+			crossorigin="anonymous"
+			async>
+		</script>
 	</body>
 </html>
