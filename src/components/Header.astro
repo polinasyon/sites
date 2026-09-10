@@ -1,0 +1,35 @@
+---
+import { SITE_TITLE } from '../consts';
+---
+
+<!-- block w-full ile header bandı ekranı boydan boya kaplıyor -->
+<header class="block w-full bg-white border-b border-gray-100 sticky top-0 z-50 shadow-xs">
+	<!-- max-w-4xl, px-6 ve h-16 (yükseklik/dolgu) dengesi Footer ile birebir aynı yapıldı -->
+	<nav class="max-w-4xl mx-auto px-6 h-16 flex items-center justify-center w-full">
+		
+		<!-- Logo ve Marka İsmi -->
+		<a href="/" class="flex items-center gap-3 no-underline group flex-row shrink-0">
+			<!-- w-12 h-12 (48px) yapılarak içindeki 36px ölçülü SVG logo için pürüzsüz bir kurumsal çerçeve sağlandı -->
+			<div class="w-12 h-12 rounded-xl flex items-center justify-center bg-gray-50 border border-gray-100 transition-colors group-hover:bg-amber-50/50 overflow-hidden shrink-0">
+				<!-- Üçlü Petek SVG Logo (Adresi ve ölçüleri düzeltildi) -->
+				<svg 
+					xmlns="http://w3.org" 
+					viewBox="0 0 48 48" 
+					width="36" 
+					height="36" 
+					class="transition-transform group-hover:scale-105"
+				>
+					<path fill="#000000" stroke="#ffffff" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M5.63 24l4.696-8.137h9.397L24.42 24l-4.698 8.137h-9.397z" />
+					<path fill="#f59e0b" stroke="#ffffff" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M23.58 13.637L28.274 5.5h9.397l4.698 8.137l-4.698 8.137h-9.397z" />
+					<path fill="#f59e0b" stroke="#ffffff" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M23.58 34.363l4.695-8.137h9.397l4.698 8.137l-4.698 8.137h-9.397z" />
+				</svg>
+			</div>
+			<!-- Marka Yazısı -->
+			<span class="text-xl font-black tracking-wider bg-gradient-to-r from-amber-600 via-yellow-500 to-black bg-clip-text text-transparent uppercase shrink-0">
+				PoliNASYON
+			</span>
+		</a>
+
+	</nav>
+</header>
+

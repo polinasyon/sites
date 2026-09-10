@@ -1,0 +1,158 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+import { getCollection } from 'astro:content';
+
+type Props = CollectionEntry<'blog'>['data'];
+
+const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const currentSlug = Astro.params.slug || '';
+
+const allPosts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const relatedPosts = allPosts
+	.filter(post => (post.slug || post.id) !== currentSlug)
+	.slice(0, 2);
+
+const imageSrc = heroImage 
+	? (typeof heroImage === 'object' ? (heroImage as any).src : heroImage)
+	: null;
+---
+
+<html lang="tr">
+	<head>
+		<BaseHead title={title} description={description} />
+	</head>
+
+	<body class="bg-gray-200/50 text-gray-900 m-0 p-0 antialiased min-h-screen flex flex-col">
+		<Header />
+		
+		<main class="flex-grow max-w-4xl mx-auto px-6 py-12 w-full space-y-10">
+			<article class="bg-white border border-gray-100 rounded-2xl p-6 sm:p-10 shadow-xl space-y-8">
+				
+				{imageSrc && (
+					<div class="w-full h-64 sm:h-96 rounded-xl overflow-hidden bg-gray-100 shadow-xs">
+						<img src={imageSrc} alt={title} class="w-full h-full object-cover" />
+					</div>
+				)}
+
+				<div class="space-y-4 border-b border-gray-100 pb-6 text-center md:text-left">
+					<div class="text-sm font-semibold text-amber-600 flex flex-wrap items-center justify-center md:justify-start gap-2">
+						<FormattedDate date={pubDate} />
+						{updatedDate && <span class="text-gray-400 italic">(Güncellenme: <FormattedDate date={updatedDate} />)</span>}
+					</div>
+					<h1 class="text-3xl sm:text-4xl font-black tracking-tight text-gray-900 m-0 leading-tight">{title}</h1>
+					{description && <p class="text-base text-gray-500 font-medium m-0 pt-1">{description}</p>}
+				</div>
+
+				<div class="prose prose-amber max-w-none text-gray-700 leading-relaxed space-y-4 font-medium">
+					<slot />
+				</div>
+			</article>
+
+			<!-- İÇ LİNKLEME: BENZER YAYINLAR -->
+			{relatedPosts && relatedPosts.length > 0 && (
+				<div class="w-full bg-gray-50/70 border border-gray-200/50 rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 space-y-4">
+					<h3 class="text-lg font-black text-gray-900 m-0 flex items-center gap-2">📖 Bunlar da İlginizi Çekebilir</h3>
+					<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+						{relatedPosts.map((post) => {
+							const postImage = post.data.heroImage 
+								? (typeof post.data.heroImage === 'object' ? (post.data.heroImage as any).src : post.data.heroImage)
+								: 'https://githubusercontent.com';
+
+							return (
+								<a href={`/blog/${post.id || post.slug}/`} class="flex items-center gap-4 p-3 bg-white border-2 border-transparent rounded-lg shadow-2xs hover:border-amber-500 hover:-translate-y-0.5 hover:shadow-sm transition-all duration-300 group no-underline">
+									<div class="w-16 h-16 rounded-md overflow-hidden bg-gray-100 shrink-0">
+										<img src={postImage} alt={post.data.title} class="w-full h-full object-cover" />
+									</div>
+									<div class="space-y-0.5 min-w-0">
+										<span class="text-[10px] font-bold text-amber-600">{new Date(post.data.pubDate).toLocaleDateString('tr-TR', { year: 'numeric', month: 'long' })}</span>
+										<h4 class="text-sm font-black text-gray-900 m-0 truncate group-hover:text-amber-500 transition-colors">{post.data.title}</h4>
+										<p class="text-xs text-gray-500 truncate m-0 font-medium">{post.data.description || 'Makaleyi inceleyin.'}</p>
+									</div>
+								</a>
+							);
+						})}
+					</div>
+				</div>
+			)}
+
+			<!-- İKİ KATLI LÜKS BANNER YORUM MODÜLÜ -->
+			<div class="w-full space-y-6 relative z-50 pointer-events-auto">
+				<div class="w-full bg-gray-50/70 border border-gray-200/50 rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col items-center justify-center text-center">
+					<div class="space-y-3 max-w-md mx-auto flex flex-col items-center">
+						<div class="w-12 h-12 rounded-xl flex items-center justify-center bg-neutral-950 border border-neutral-900 p-2.5 shadow-md mb-1">
+							<svg xmlns="http://w3.org" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
+								<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.38 0 0 1 8 8v.5z"/>
+							</svg>
+						</div>
+						<h3 class="text-xl font-black text-gray-900 m-0">Fikirleriniz Bizim İçin Değerli</h3>
+						<p class="text-xs font-bold text-amber-600 uppercase tracking-widest m-0">PoliNASYON Kültür ve Paylaşım Ağı</p>
+					</div>
+				</div>
+
+				<!-- 2. ALT BANNER: ANINDA AÇILAN CANLI FORM ALANI -->
+				<div class="w-full bg-gray-50/70 border border-gray-200/50 rounded-xl p-6 sm:p-8 shadow-md hover:shadow-xl transition-all duration-300 relative z-50 pointer-events-auto">
+					<div class="space-y-4">
+						<div class="w-full sm:w-1/3">
+							<input type="text" id="comment-name-input" class="w-full px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm font-semibold focus:outline-none focus:border-amber-500 shadow-3xs text-gray-800" placeholder="İsim (Opsiyonel)" />
+						</div>
+						<textarea id="local-comment-box" rows="4" class="w-full p-4 bg-white border border-gray-200 rounded-xl text-sm font-medium focus:outline-none focus:border-amber-500 shadow-3xs resize-none text-gray-800" placeholder="Yorumunuzu buraya write in..."></textarea>
+						<div class="flex justify-between items-center">
+							<span class="text-xs text-gray-400 font-semibold">🔒 PoliNASYON Güvenli Altyapısı</span>
+							<button id="submit-comment-btn" class="px-5 py-2.5 bg-neutral-900 text-white rounded-xl text-sm font-bold hover:bg-amber-500 hover:text-neutral-950 transition-all shadow-xs cursor-pointer relative z-50">Yorumu Gönder</button>
+						</div>
+					</div>
+					<div id="comments-stream-container" class="mt-6 space-y-4 empty:hidden pt-4 border-t border-gray-200/50"></div>
+				</div>
+			</div>
+		</main>
+
+		<Footer />
+
+		<script is:inline>
+			const nameInput = document.getElementById('comment-name-input');
+			const commentBox = document.getElementById('local-comment-box');
+			const submitBtn = document.getElementById('submit-comment-btn');
+			const streamContainer = document.getElementById('comments-stream-container');
+			const storageKey = 'comments_' + window.location.pathname;
+
+			function loadStoredComments() {
+				const savedComments = JSON.parse(localStorage.getItem(storageKey) || '[]');
+				savedComments.forEach(c => renderComment(c.name, c.text, c.date));
+			}
+
+			function renderComment(name, text, date) {
+				const commentElement = document.createElement('div');
+				commentElement.className = "p-4 bg-white border border-gray-100 rounded-xl shadow-xs space-y-1.5";
+				commentElement.innerHTML = `
+					<div class="flex justify-between items-center">
+						<span class="text-xs font-black text-gray-900 bg-gray-100 px-2.5 py-0.5 rounded-md">🐝 ${name}</span>
+						<span class="text-[10px] text-gray-400 font-bold">${date}</span>
+					</div>
+					<p class="text-sm text-gray-600 font-medium m-0 pt-1 leading-relaxed break-words">${text}</p>
+				`;
+				streamContainer?.prepend(commentElement);
+			}
+
+			submitBtn?.addEventListener('click', () => {
+				const commentText = commentBox?.value.trim();
+				let userName = nameInput?.value.trim() || 'Polinasyon Misafiri';
+				if (!commentText) { alert('Lütfen boş yorum göndermeyin.'); return; }
+				const today = new Date().toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+				renderComment(userName, commentText, today);
+				const savedComments = JSON.parse(localStorage.getItem(storageKey) || '[]');
+				savedComments.push({ name: userName, text: commentText, date: today });
+				localStorage.setItem(storageKey, JSON.stringify(savedComments));
+				if (commentBox) commentBox.value = '';
+			});
+			loadStoredComments();
+		</script>
+	</body>
+</html>
+

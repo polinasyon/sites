@@ -1,0 +1,44 @@
+---
+const today = new Date();
+---
+
+<!-- bg-white ve border-t ile tamamen Header'ın renk ve çizgi diline eşitlendi -->
+<footer class="w-full bg-white border-t border-gray-100 py-6 mt-16 text-center relative z-50 pointer-events-auto">
+	<!-- max-w-4xl yapılarak iç genişlik Header ile milimetrik olarak aynı boyuta getirildi -->
+	<div class="max-w-4xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4 w-full">
+		
+		<!-- Sol Kısım: Telif Hakkı ve Marka -->
+		<div class="space-y-0.5 text-center sm:text-left">
+			<p class="text-sm font-black text-gray-900 m-0">
+				&copy; {today.getFullYear()} PoliNASYON. Tüm hakları saklıdır.
+			</p>
+			<p class="text-xs text-gray-500 font-medium m-0">
+				Simav & Çitgöl Arıcılık Geliştirme ve Ar-Ge Ekosistemi.
+			</p>
+		</div>
+
+		<!-- Sağ Kısım: Sosyal Medya Linkleri (Header Zarifliğinde ve Amber Hover Efektli) -->
+		<div class="flex items-center gap-3 text-xs font-bold text-gray-600">
+			<a href="https://facebook.com" target="_blank" class="no-underline text-gray-600 hover:text-amber-500 transition-colors">
+				Facebook
+			</a>
+			<span class="text-gray-200 hidden sm:inline">|</span>
+			
+			<a href="https://instagram.com" target="_blank" class="no-underline text-gray-600 hover:text-amber-500 transition-colors">
+				Instagram
+			</a>
+			<span class="text-gray-200 hidden sm:inline">|</span>
+			
+			<a href="https://youtube.com" target="_blank" class="no-underline text-gray-600 hover:text-amber-500 transition-colors">
+				YouTube
+			</a>
+			<span class="text-gray-200 hidden sm:inline">|</span>
+			
+			<a href="https://github.com" target="_blank" class="no-underline text-gray-600 hover:text-amber-500 transition-colors">
+				GitHub
+			</a>
+		</div>
+
+	</div>
+</footer>
+

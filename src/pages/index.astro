@@ -1,0 +1,98 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+
+// MODÜLLERİMİZİ İTHAL EDİYORUZ
+import AboutPanel from '../components/AboutPanel.astro';
+import ProductsPanel from '../components/ProductsPanel.astro';
+import BlogPanel from '../components/BlogPanel.astro';
+import ContactPanel from '../components/ContactPanel.astro';
+
+import { getCollection } from 'astro:content';
+const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<!doctype html>
+<html lang="tr">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body class="bg-gray-200/50 text-gray-900 m-0 p-0 antialiased min-h-screen flex flex-col">
+		
+		<Header />
+
+		<main class="flex-grow max-w-5xl mx-auto px-6 py-12 w-full space-y-8">
+			
+			<!-- 4 Etkileşimli Ana Buton Düzeni -->
+			<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+				<button data-target="panel-hakkimizda" class="nav-tab-btn flex flex-col items-center justify-center p-6 bg-neutral-900 text-white font-bold rounded-xl border border-neutral-800 shadow-sm transition-all duration-300 ease-in-out hover:bg-amber-500 hover:text-neutral-950 group text-center space-y-3 cursor-pointer">
+					<div class="w-12 h-12 rounded-lg bg-neutral-800 flex items-center justify-center text-xl transition-colors duration-300 group-hover:bg-amber-600/20">🏠</div>
+					<p class="text-base font-extrabold m-0">Hakkımızda</p>
+				</button>
+				<button data-target="panel-urunler" class="nav-tab-btn flex flex-col items-center justify-center p-6 bg-neutral-900 text-white font-bold rounded-xl border border-neutral-800 shadow-sm transition-all duration-300 ease-in-out hover:bg-amber-500 hover:text-neutral-950 group text-center space-y-3 cursor-pointer">
+					<div class="w-12 h-12 rounded-lg bg-neutral-800 flex items-center justify-center text-xl transition-colors duration-300 group-hover:bg-amber-600/20">📦</div>
+					<p class="text-base font-extrabold m-0">Ürünler</p>
+				</button>
+				<button data-target="panel-blog" class="nav-tab-btn flex flex-col items-center justify-center p-6 bg-neutral-900 text-white font-bold rounded-xl border border-neutral-800 shadow-sm transition-all duration-300 ease-in-out hover:bg-amber-500 hover:text-neutral-950 group text-center space-y-3 cursor-pointer">
+					<div class="w-12 h-12 rounded-lg bg-neutral-800 flex items-center justify-center text-xl transition-colors duration-300 group-hover:bg-amber-600/20">✍️</div>
+					<p class="text-base font-extrabold m-0">Blog</p>
+				</button>
+				<button data-target="panel-iletisim" class="nav-tab-btn flex flex-col items-center justify-center p-6 bg-neutral-900 text-white font-bold rounded-xl border border-neutral-800 shadow-sm transition-all duration-300 ease-in-out hover:bg-amber-500 hover:text-neutral-950 group text-center space-y-3 cursor-pointer">
+					<div class="w-12 h-12 rounded-lg bg-neutral-800 flex items-center justify-center text-xl transition-colors duration-300 group-hover:bg-amber-600/20">✉️</div>
+					<p class="text-base font-extrabold m-0">İletişim</p>
+				</button>
+			</div>
+
+			<!-- MODÜLLERİN EKRANA ÇAĞRILDIĞI ALAN -->
+			<div class="relative">
+				<AboutPanel />
+				<ProductsPanel />
+				<BlogPanel posts={posts} />
+				<ContactPanel />
+			</div>
+		</main>
+
+		<!-- Panelleri Yöneten Fonksiyonel Script Altyapısı -->
+		<script is:inline>
+			const buttons = document.querySelectorAll('.nav-tab-btn');
+			const panels = document.querySelectorAll('.content-panel');
+
+			buttons.forEach(button => {
+				button.addEventListener('click', () => {
+					const targetId = button.getAttribute('data-target');
+					const targetPanel = document.getElementById(targetId);
+
+					if (targetPanel) {
+						if (!targetPanel.classList.contains('hidden')) {
+							targetPanel.classList.add('hidden');
+						} else {
+							panels.forEach(p => p.classList.add('hidden'));
+							targetPanel.classList.remove('hidden');
+						}
+					}
+				});
+			});
+
+			// Blog Sayfalama Mantığı
+			const POSTS_PER_PAGE = 8; let currentPage = 1;
+			const postCards = document.querySelectorAll('.blog-post-card');
+			const totalPosts = postCards.length; const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
+			const btnPrev = document.getElementById('btn-prev-page'); const btnNext = document.getElementById('btn-next-page'); const pageInfo = document.getElementById('blog-page-info');
+
+			function updateBlogPagination() {
+				postCards.forEach((card, index) => {
+					const start = (currentPage - 1) * POSTS_PER_PAGE; const end = start + POSTS_PER_PAGE;
+					card.style.display = (index >= start && index < end) ? 'flex' : 'none';
+				});
+				if (pageInfo) pageInfo.textContent = 'Sayfa ' + currentPage + ' / ' + (totalPages || 1);
+				if (btnPrev) btnPrev.disabled = (currentPage === 1);
+				if (btnNext) btnNext.disabled = (currentPage === totalPages || totalPages === 0);
+			}
+			btnPrev?.addEventListener('click', () => { if (currentPage > 1) { currentPage--; updateBlogPagination(); } });
+			btnNext?.addEventListener('click', () => { if (currentPage < totalPages) { currentPage++; updateBlogPagination(); } });
+			updateBlogPagination();
+		</script>
+	</body>
+</html>
+

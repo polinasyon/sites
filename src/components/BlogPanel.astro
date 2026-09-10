@@ -1,0 +1,83 @@
+---
+// Blog Modülü - İnternet Linkli Görseller İçin Tam Uyumlu Kararlı Sürüm
+interface Props {
+	posts: any[];
+}
+const { posts } = Astro.props;
+---
+
+<div id="panel-blog" class="content-panel hidden bg-gray-50/70 border border-gray-200/50 rounded-xl p-6 sm:p-10 shadow-md hover:shadow-xl transition-all duration-300">
+	<h2 class="text-2xl font-black text-gray-900 tracking-tight mb-6">Yayınlarımız & Makalelerimiz</h2>
+	
+	<!-- Makalelerin Listelendiği Alan -->
+	<div id="blog-posts-wrapper" class="space-y-6">
+		{posts && posts.length > 0 ? (
+			posts.map((post) => {
+				// Görseli güvenli şekilde al
+				const imageSrc = post.data?.heroImage 
+					? (typeof post.data.heroImage === 'object' 
+						? post.data.heroImage.src 
+						: post.data.heroImage)
+					: null;
+
+				return (
+					<article class="blog-post-card flex flex-col md:flex-row gap-6 p-5 bg-white border-2 border-transparent rounded-xl shadow-xs transition-all duration-300 ease-out hover:border-amber-500 hover:-translate-y-1 hover:shadow-md group">
+						
+						<!-- Dikdörtgen Resimli Ön İzleme -->
+						<div class="w-full md:w-48 h-32 rounded-lg overflow-hidden bg-gray-200 shrink-0 flex items-center justify-center">
+							{imageSrc ? (
+								<img 
+									src={imageSrc} 
+									alt={post.data.title || 'Makale görseli'} 
+									loading="lazy"
+									decoding="async"
+									class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+								/>
+							) : (
+								<div class="w-full h-full flex items-center justify-center text-xs text-gray-400 font-medium">
+									Görsel Yok
+								</div>
+							)}
+						</div>
+
+						<!-- Metin İçerikleri -->
+						<div class="flex flex-col justify-between space-y-2 flex-grow">
+							<div class="space-y-1">
+								<span class="text-xs font-semibold text-amber-600">
+									{post.data.pubDate ? new Date(post.data.pubDate).toLocaleDateString('tr-TR', { 
+										year: 'numeric', month: 'long', day: 'numeric' 
+									}) : ''}
+								</span>
+								<h3 class="text-xl font-bold text-gray-900 m-0 group-hover:text-amber-500 transition-colors">
+									{post.data.title}
+								</h3>
+								<p class="text-sm text-gray-600 leading-relaxed m-0 pt-1">
+									{post.body ? post.body.substring(0, 200).replace(/[#*`_]/g, '') + '...' : post.data.description}
+								</p>
+							</div>
+							
+							<!-- Esnek Link Yapısı -->
+							<a href={`/blog/${post.id || post.slug}/`} class="inline-flex items-center text-sm font-bold text-neutral-900 hover:text-amber-500 no-underline transition-colors mt-2">
+								Devamını Oku →
+							</a>
+						</div>
+
+					</article>
+				);
+			})
+		) : (
+			<p class="text-sm text-gray-500 italic text-center py-6">Henüz yayınlanmış bir makale bulunamadı.</p>
+		)}
+	</div>
+
+	<!-- Ok Tuşları / Sayfalama Navigasyonu -->
+	<div id="blog-pagination" class="flex items-center justify-between mt-8 pt-6 border-t border-gray-100">
+		<button id="btn-prev-page" class="px-4 py-2 bg-neutral-900 text-white rounded-lg text-sm font-bold hover:bg-amber-500 hover:text-neutral-950 transition-colors disabled:opacity-30 cursor-pointer">
+			← Önceki Yazılar
+		</button>
+		<span id="blog-page-info" class="text-sm font-semibold text-gray-500">Sayfa 1 / 1</span>
+		<button id="btn-next-page" class="px-4 py-2 bg-neutral-900 text-white rounded-lg text-sm font-bold hover:bg-amber-500 hover:text-neutral-950 transition-colors disabled:opacity-30 cursor-pointer">
+			Sonraki Yazılar →
+		</button>
+	</div>
+</div>
