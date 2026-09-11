@@ -2,34 +2,78 @@
 import { SITE_TITLE } from '../consts';
 ---
 
-<!-- block w-full ile header bandı ekranı boydan boya kaplıyor -->
-<header class="block w-full bg-white border-b border-gray-100 sticky top-0 z-50 shadow-xs">
-	<!-- max-w-4xl, px-6 ve h-16 (yükseklik/dolgu) dengesi Footer ile birebir aynı yapıldı -->
-	<nav class="max-w-4xl mx-auto px-6 h-16 flex items-center justify-center w-full">
+<!-- Header Bandı -->
+<header class="block w-full bg-[#1c1c1c] border-b border-white/5 sticky top-0 z-50 shadow-2xl backdrop-blur-md">
+	<nav class="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between w-full">
 		
 		<!-- Logo ve Marka İsmi -->
-		<a href="/" class="flex items-center gap-3 no-underline group flex-row shrink-0">
-			<!-- w-12 h-12 (48px) yapılarak içindeki 36px ölçülü SVG logo için pürüzsüz bir kurumsal çerçeve sağlandı -->
-			<div class="w-12 h-12 rounded-xl flex items-center justify-center bg-gray-50 border border-gray-100 transition-colors group-hover:bg-amber-50/50 overflow-hidden shrink-0">
-				<!-- Üçlü Petek SVG Logo (Adresi ve ölçüleri düzeltildi) -->
+		<a href="/" class="flex items-center gap-3 no-underline group shrink-0">
+			<!-- Mat Çerçeve -->
+			<div class="w-10 h-10 rounded-xl flex items-center justify-center bg-[#0d0d0d] border border-white/10 transition-colors group-hover:border-white/20 overflow-hidden shrink-0">
+				<!-- Üçlü Petek SVG Logo -->
 				<svg 
-					xmlns="http://w3.org" 
+					xmlns="http://www.w3.org/2000/svg" 
 					viewBox="0 0 48 48" 
-					width="36" 
-					height="36" 
+					width="30" 
+					height="30" 
 					class="transition-transform group-hover:scale-105"
 				>
-					<path fill="#000000" stroke="#ffffff" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M5.63 24l4.696-8.137h9.397L24.42 24l-4.698 8.137h-9.397z" />
-					<path fill="#f59e0b" stroke="#ffffff" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M23.58 13.637L28.274 5.5h9.397l4.698 8.137l-4.698 8.137h-9.397z" />
-					<path fill="#f59e0b" stroke="#ffffff" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M23.58 34.363l4.695-8.137h9.397l4.698 8.137l-4.698 8.137h-9.397z" />
+					<path fill="#e2e8f0" stroke="#0d0d0d" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M5.63 24l4.696-8.137h9.397L24.42 24l-4.698 8.137h-9.397z" />
+					<path fill="#94a3b8" stroke="#0d0d0d" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M23.58 13.637L28.274 5.5h9.397l4.698 8.137l-4.698 8.137h-9.397z" />
+					<path fill="#94a3b8" stroke="#0d0d0d" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M23.58 34.363l4.695-8.137h9.397l4.698 8.137l-4.698 8.137h-9.397z" />
 				</svg>
 			</div>
 			<!-- Marka Yazısı -->
-			<span class="text-xl font-black tracking-wider bg-gradient-to-r from-amber-600 via-yellow-500 to-black bg-clip-text text-transparent uppercase shrink-0">
-				PoliNASYON
+			<span class="text-lg font-bold tracking-wider text-[#e2e8f0] uppercase shrink-0">
+				POLİNASYON <span class="text-[#94a3b8] font-normal">X</span>
 			</span>
 		</a>
 
+		<!-- Arama Butonu (Sağ Köşe) -->
+		<button 
+			id="search-toggle"
+			aria-label="Arama Yap"
+			class="p-2.5 rounded-xl bg-[#0d0d0d] border border-white/10 text-[#94a3b8] hover:text-[#e2e8f0] hover:border-white/20 transition-all cursor-pointer"
+		>
+			<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+				<path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+			</svg>
+		</button>
+
 	</nav>
+
+	<!-- Açılır Arama Alanı -->
+	<div 
+		id="search-box" 
+		class="hidden w-full bg-[#0d0d0d] border-b border-white/10 transition-all duration-300 overflow-hidden"
+	>
+		<div class="max-w-4xl mx-auto px-6 py-4">
+			<form action="/search" method="GET" class="relative flex items-center">
+				<input 
+					type="text" 
+					name="q" 
+					placeholder="Sitede ara (örn: BeeTrack, Astro, Polinasyon)..." 
+					class="w-full bg-[#1c1c1c] text-[#e2e8f0] placeholder-[#94a3b8] px-4 py-3 pl-11 rounded-xl border border-white/10 focus:outline-none focus:border-white/30 text-sm transition-all"
+					autocomplete="off"
+				/>
+				<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 absolute left-3.5 text-[#94a3b8]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+					<path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+				</svg>
+			</form>
+		</div>
+	</div>
 </header>
 
+<!-- Tıklama Mantığı -->
+<script>
+	const searchToggle = document.getElementById('search-toggle');
+	const searchBox = document.getElementById('search-box');
+
+	searchToggle?.addEventListener('click', () => {
+		searchBox?.classList.toggle('hidden');
+		if (!searchBox?.classList.contains('hidden')) {
+			const input = searchBox?.querySelector('input');
+			input?.focus();
+		}
+	});
+</script>
