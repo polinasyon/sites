@@ -155,77 +155,64 @@
 			stroke: currentColor;
 			stroke-width: 2;
 			stroke-linecap: round;
-			stroke-linejoin: * Sol Dropdown Menü Stilleri */
+			stroke-linejoin: round;
+		}
+
+		/* Sol Dropdown Menü Stilleri */
 		.dropdown {
 			position: relative;
 		}
 
-		/* Sol Dropdown Menü Stilleri */
-.dropdown {
-    position: relative;
-}
+		.dropdown-menu {
+			position: absolute;
+			top: calc(100% + 12px);
+			left: 0;
+			width: 200px;
+			background: var(--bg-surface);
+			border: 1px solid var(--border-subtle);
+			border-radius: 12px;
+			padding: 0.5rem;
+			box-shadow: 0 15px 35px -5px rgba(0,0,0,0.9), 0 8px 20px -4px var(--amber-glow);
+			opacity: 0;
+			visibility: hidden;
+			transform: translateY(-8px);
+			transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+			z-index: 1001;
+		}
 
-.dropdown-menu {
-    position: absolute;
-    top: calc(100% + 16px);
-    left: 0;
-    width: 240px; /* Görseldeki gibi daha geniş */
-    background: #18181b; /* Görseldeki koyu gri/siyah ton */
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 16px; /* Daha yumuşak köşeler */
-    padding: 0.75rem; /* Dış çerçeve iç boşluğu */
-    box-shadow: 0 20px 40px -5px rgba(0,0,0,0.9), 0 8px 20px -4px rgba(245, 158, 11, 0.1);
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-8px);
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 1001;
-}
+		.dropdown.open .dropdown-menu {
+			opacity: 1;
+			visibility: visible;
+			transform: translateY(0);
+		}
 
-.dropdown.open .dropdown-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
+		.dropdown-item {
+			display: flex;
+			align-items: center;
+			gap: 10px; /* SVG ve Yazı arası boşluk */
+			color: var(--text-main);
+			text-decoration: none;
+			padding: 0.6rem 0.8rem;
+			font-size: 0.9rem;
+			border-radius: 6px;
+			font-weight: 500;
+			transition: all 0.2s ease;
+		}
 
-.dropdown-item {
-    display: flex;
-    align-items: center;
-    gap: 16px; /* SVG ve Yazı arası boşluk görseldeki gibi arttırıldı */
-    color: var(--text-main);
-    text-decoration: none;
-    padding: 0.9rem 1rem; /* Satırlar arası ferahlık eklendi */
-    font-size: 1.05rem; /* Görseldeki gibi biraz daha büyük okunaklı font */
-    border-radius: 10px;
-    font-weight: 500;
-    transition: all 0.2s ease;
-}
-
-.dropdown-item svg {
-    width: 22px;
-    height: 22px;
-    stroke: #e2e8f0; /* Standart ikon rengi */
-    opacity: 0.9;
-}
-
-.dropdown-item:hover {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-/* Astro Şablonu (Sarı/Kehribar) Öğesi */
-.dropdown-item.astro-item {
-    color: var(--amber);
-}
-
-.dropdown-item.astro-item svg {
-    stroke: var(--amber); /* Astro öğesinin ikon rengi */
-    opacity: 1;
-}
-
-.dropdown-item.astro-item:hover {
-    background: rgba(245, 158, 11, 0.1);
-}
-
+		.dropdown-item:hover {
+			background: rgba(245, 158, 11, 0.12);
+			color: var(--amber);
+			padding-left: 1rem;
+		}
+		
+		.dropdown-item.astro-item {
+			color: var(--amber);
+		}
+		
+		.dropdown-item.astro-item:hover {
+			background: rgba(245, 158, 11, 0.15);
+			color: #fff;
+		}
 
 		/* Arama Paneli */
 		.search-panel {
@@ -594,60 +581,53 @@
 							</svg>
 						</button>
 						<div class="dropdown-menu">
-    <a href="#top" class="dropdown-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-            <polyline points="9 22 9 12 15 12 15 22"></polyline>
-        </svg>
-        <span>Ana Sayfa</span>
-    </a>
-    <a href="#blog" class="dropdown-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-            <line x1="16" y1="13" x2="8" y2="13"></line>
-            <line x1="16" y1="17" x2="8" y2="17"></line>
-            <line x1="10" y1="9" x2="8" y2="9"></line>
-        </svg>
-        <span>Blog</span>
-    </a>
-    
-    <a href="#urunler" class="dropdown-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line>
-            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-            <line x1="12" y1="22.08" x2="12" y2="12"></line>
-        </svg>
-        <span>Ürünler</span>
-    </a>
-    
-    <a href="#hakkimizda" class="dropdown-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-        </svg>
-        <span>Hakkımda</span>
-    </a>
-    
-    <a href="#iletisim" class="dropdown-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-            <polyline points="22,6 12,13 2,6"></polyline>
-        </svg>
-        <span>İletişim</span>
-    </a>
-    
-    <a href="#astro-sablon" class="dropdown-item astro-item">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-            <polyline points="2 12 12 17 22 12"></polyline>
-            <polyline points="2 17 12 22 22 17"></polyline>
-        </svg>
-        <span>Astro Şablonu</span>
-    </a>
-</div>
-
+							<a href="#top" class="dropdown-item">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+									<polyline points="9 22 9 12 15 12 15 22"></polyline>
+								</svg>
+								<span>Ana Sayfa</span>
+							</a>
+							<a href="#blog" class="dropdown-item">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+									<polyline points="14 2 14 8 20 8"></polyline>
+									<line x1="16" y1="13" x2="8" y2="13"></line>
+									<line x1="16" y1="17" x2="8" y2="17"></line>
+									<line x1="10" y1="9" x2="8" y2="9"></line>
+								</svg>
+								<span>Blog</span>
+							</a>
+							<a href="#urunler" class="dropdown-item">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line>
+									<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+									<polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+									<line x1="12" y1="22.08" x2="12" y2="12"></line>
+								</svg>
+								<span>Ürünler</span>
+							</a>
+							<a href="#hakkimizda" class="dropdown-item">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+									<circle cx="12" cy="7" r="4"></circle>
+								</svg>
+								<span>Hakkımda</span>
+							</a>
+							<a href="#iletisim" class="dropdown-item">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+									<polyline points="22,6 12,13 2,6"></polyline>
+								</svg>
+								<span>İletişim</span>
+							</a>
+							<a href="#astro-sablon" class="dropdown-item astro-item">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+								</svg>
+								<span>Astro Şablonu</span>
+							</a>
+						</div>
 					</div>
 				</div>
 
