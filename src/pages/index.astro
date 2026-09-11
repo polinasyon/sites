@@ -697,6 +697,12 @@
 
 	<!-- İstemci Tarafı JS -->
 	<script>
+		// Sayfa yenilendiğinde URL'deki hash (#) bağlantısını temizle ve en üste kaydır
+		if (window.location.hash) {
+			history.replaceState(null, '', window.location.pathname + window.location.search);
+			window.scrollTo(0, 0);
+		}
+
 		// Dropdown Menü Kontrolü (Tıklama ile Aç/Kapa)
 		const dropdown = document.getElementById('dropdown');
 		const dropdownTrigger = document.getElementById('dropdownTrigger');
