@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Kanatların Matemetigi</title>
+	<title>Kanatların Matematiği</title>
 	<style>
 		/* Renk Paleti ve Değişkenler */
 		:root {
@@ -62,7 +62,21 @@
 			color: var(--text-main);
 			text-decoration: none;
 			letter-spacing: 0.5px;
-			text-align: center;
+			display: flex;
+			align-items: center;
+			gap: 0.6rem;
+			justify-content: center;
+		}
+
+		.logo-icon {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: transform 0.3s ease;
+		}
+
+		.logo:hover .logo-icon {
+			transform: scale(1.08);
 		}
 
 		.header-right {
@@ -193,17 +207,16 @@
 			border: 1px solid var(--border-subtle);
 			padding: 1.75rem;
 			border-radius: 12px;
-			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 8px 15px -6px rgba(245, 158, 11, 0.15); /* İnce Amber Alt Işık */
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 8px 15px -6px rgba(245, 158, 11, 0.15);
 			transition: all 0.3s ease;
 		}
 
 		.card:hover {
 			transform: translateY(-4px);
 			border-color: rgba(245, 158, 11, 0.3);
-			box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7), 0 12px 25px -4px rgba(245, 158, 11, 0.3); /* Vurgulu Amber Alt Işık */
+			box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7), 0 12px 25px -4px rgba(245, 158, 11, 0.3);
 		}
 
-		/* Kart Başlıkları Amber Yapıldı */
 		.card h3 {
 			color: var(--amber);
 			margin-bottom: 0.75rem;
@@ -382,7 +395,21 @@
 		<div class="container">
 			<div class="header-inner">
 				<div></div> <!-- Sol boşluk hizalama için -->
-				<a href="#" class="logo">Polinasyon</a>
+				<a href="#" class="logo">
+					<div class="logo-icon">
+						<svg 
+							xmlns="http://www.w3.org/2000/svg" 
+							viewBox="0 0 48 48" 
+							width="30" 
+							height="30"
+						>
+							<path fill="#e2e8f0" stroke="#0d0d0d" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M5.63 24l4.696-8.137h9.397L24.42 24l-4.698 8.137h-9.397z" />
+							<path fill="#94a3b8" stroke="#0d0d0d" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M23.58 13.637L28.274 5.5h9.397l4.698 8.137l-4.698 8.137h-9.397z" />
+							<path fill="#94a3b8" stroke="#0d0d0d" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M23.58 34.363l4.695-8.137h9.397l4.698 8.137l-4.698 8.137h-9.397z" />
+						</svg>
+					</div>
+					<span>Polinasyon</span>
+				</a>
 				<div class="header-right">
 					<button class="search-btn" id="searchToggle" aria-label="Arama Yap">
 						<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
