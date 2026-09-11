@@ -8,11 +8,11 @@
 		/* Renk Paleti ve Değişkenler */
 		:root {
 			--bg-black: #0d0d0d;         /* Tam Mat Siyah Zemin */
-			--bg-surface: #1c1c1c;       /* Görseldeki Mat Koyu Gri Yüzey */
-			--text-main: #e2e8f0;        /* Platin / Mat Beyaz */
+			--bg-surface: #1c1c1c;       /* Mat Koyu Gri Yüzey */
+			--text-main: #e2e8f0;        /* Platin / Mat Açık Gri */
 			--text-muted: #94a3b8;       /* Mat Dumanlı Gri */
-			--accent-gold: #f59e0b;      /* Kehribar / Sıcak Altın */
-			--accent-border: rgba(245, 158, 11, 0.15);
+			--border-subtle: rgba(255, 255, 255, 0.05);
+			--surface-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05), 0 10px 30px -10px rgba(0, 0, 0, 0.8);
 		}
 
 		* {
@@ -39,11 +39,11 @@
 			position: fixed;
 			top: 1.25rem;
 			left: 1.25rem;
-			background: rgba(28, 28, 28, 0.8);
-			border: 1px solid var(--accent-border);
+			background: rgba(28, 28, 28, 0.85);
+			border: 1px solid var(--border-subtle);
 			padding: 0.6rem 1.2rem;
 			border-radius: 8px;
-			color: var(--accent-gold);
+			color: var(--text-main);
 			text-decoration: none;
 			font-size: 0.875rem;
 			font-weight: 500;
@@ -51,44 +51,47 @@
 			-webkit-backdrop-filter: blur(12px);
 			transition: all 0.3s ease;
 			z-index: 100;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 		}
 
 		.fixed-btn:hover {
-			border-color: var(--accent-gold);
-			box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+			background: var(--bg-surface);
+			border-color: rgba(255, 255, 255, 0.2);
 			transform: translateY(-2px);
 		}
 
-		/* Bölüm Ortak Ayarı */
+		/* Bölüm Derinlik Ayarları */
 		section {
-			padding: 5rem 0;
-			border-bottom: 1px solid var(--accent-border);
+			padding: 4rem 2rem;
+			margin-bottom: 2.5rem;
+			background: linear-gradient(180deg, rgba(28, 28, 28, 0.4) 0%, rgba(20, 20, 20, 0.6) 100%);
+			border-top: 1px solid var(--border-subtle);
+			border-radius: 16px;
+			box-shadow: var(--surface-shadow);
 		}
 
 		h2 {
-			color: var(--accent-gold);
+			color: var(--text-main);
 			font-size: 1.75rem;
 			margin-bottom: 1.5rem;
+			font-weight: 700;
 		}
 
 		/* Hero Alanı */
 		.hero {
 			text-align: center;
-			padding-top: 7rem;
-		}
-
-		.gradient-text {
-			background: linear-gradient(135deg, #fbbf24, #d97706);
-			-webkit-background-clip: text;
-			-webkit-text-fill-color: transparent;
-			font-weight: 800;
+			padding-top: 6rem;
+			padding-bottom: 4rem;
+			margin-top: 2rem;
+			background: linear-gradient(180deg, rgba(28, 28, 28, 0.6) 0%, rgba(13, 13, 13, 0.2) 100%);
 		}
 
 		h1 {
 			font-size: 2.75rem;
 			line-height: 1.2;
 			margin-bottom: 1rem;
-			color: var(--accent-gold);
+			color: var(--text-main);
+			font-weight: 800;
 		}
 
 		.subtitle {
@@ -112,20 +115,21 @@
 
 		.card {
 			background: var(--bg-surface);
-			border: 1px solid var(--accent-border);
+			border: 1px solid var(--border-subtle);
 			padding: 1.75rem;
 			border-radius: 12px;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 			transition: all 0.3s ease;
 		}
 
 		.card:hover {
 			transform: translateY(-4px);
-			border-color: var(--accent-gold);
-			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+			border-color: rgba(255, 255, 255, 0.15);
+			box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
 		}
 
 		.card h3 {
-			color: var(--accent-gold);
+			color: var(--text-main);
 			margin-bottom: 0.75rem;
 		}
 
@@ -145,7 +149,7 @@
 		.stat-number {
 			font-size: 3rem;
 			font-weight: 800;
-			color: var(--accent-gold);
+			color: var(--text-main);
 			margin-bottom: 0.25rem;
 		}
 
@@ -163,17 +167,17 @@
 
 		.badge {
 			background: var(--bg-surface);
-			border: 1px solid var(--accent-border);
+			border: 1px solid var(--border-subtle);
 			padding: 0.4rem 0.9rem;
 			border-radius: 20px;
 			font-size: 0.85rem;
-			color: var(--accent-gold);
+			color: var(--text-main);
 			transition: all 0.3s ease;
 		}
 
 		.badge:hover {
-			border-color: var(--accent-gold);
-			background: rgba(245, 158, 11, 0.1);
+			border-color: rgba(255, 255, 255, 0.2);
+			background: rgba(255, 255, 255, 0.05);
 		}
 
 		/* Blog */
@@ -188,12 +192,12 @@
 		.blog-item h3 {
 			color: var(--text-main);
 			margin-bottom: 0.4rem;
-			transition: color 0.3s ease;
+			transition: opacity 0.3s ease;
 			cursor: pointer;
 		}
 
 		.blog-item h3:hover {
-			color: var(--accent-gold);
+			opacity: 0.8;
 		}
 
 		.blog-meta {
@@ -206,14 +210,70 @@
 			color: var(--text-muted);
 		}
 
+		/* Footer Stil Tanımlaması */
+		footer {
+			margin-top: 4rem;
+			padding: 3rem 0;
+			border-top: 1px solid var(--border-subtle);
+			background: var(--bg-black);
+		}
+
+		.footer-content {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			gap: 1.5rem;
+			text-align: center;
+		}
+
+		.footer-brand {
+			font-size: 1.1rem;
+			font-weight: 600;
+			color: var(--text-main);
+			letter-spacing: 0.5px;
+		}
+
+		.social-links {
+			display: flex;
+			gap: 1.25rem;
+			align-items: center;
+		}
+
+		.social-icon {
+			color: var(--text-muted);
+			transition: all 0.3s ease;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.social-icon svg {
+			width: 22px;
+			height: 22px;
+			fill: currentColor;
+		}
+
+		.social-icon:hover {
+			color: var(--text-main);
+			transform: translateY(-2px);
+		}
+
+		.footer-copy {
+			font-size: 0.85rem;
+			color: var(--text-muted);
+		}
+
 		/* Mobile / Responsive Breakpoints */
 		@media (max-width: 768px) {
 			section {
-				padding: 3.5rem 0;
+				padding: 2.5rem 1.25rem;
+				margin-bottom: 1.5rem;
+				border-radius: 12px;
 			}
 
 			.hero {
-				padding-top: 6rem;
+				padding-top: 5rem;
 			}
 
 			h1 {
@@ -248,7 +308,7 @@
 	<div class="container">
 		<!-- Hero Bölümü -->
 		<section class="hero">
-			<h1>Doğanın Teknolojisi:<br/><span class="gradient-text">Polinasyon & Yazılım</span></h1>
+			<h1>Doğanın Teknolojisi:<br/>Polinasyon & Yazılım</h1>
 			<p class="subtitle">Ekosistemlerin geleceğini kodluyor, arıların izinde dijital çözümler üretiyorum.</p>
 			<p class="description">Ben bir doğa araştırmacısı ve web geliştiricisiyim. Biyoçeşitliliğin korunması için teknolojinin gücünü kullanıyor, sürdürülebilir bir gelecek inşa ediyorum.</p>
 		</section>
@@ -312,5 +372,29 @@
 			</div>
 		</section>
 	</div>
+
+	<!-- Footer -->
+	<footer>
+		<div class="container">
+			<div class="footer-content">
+				<div class="footer-brand">Polinasyon x</div>
+				<div class="social-links">
+					<!-- X / Twitter SVG -->
+					<a href="#" class="social-icon" aria-label="X">
+						<svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+					</a>
+					<!-- GitHub SVG -->
+					<a href="#" class="social-icon" aria-label="GitHub">
+						<svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+					</a>
+					<!-- LinkedIn SVG -->
+					<a href="#" class="social-icon" aria-label="LinkedIn">
+						<svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+					</a>
+				</div>
+				<div class="footer-copy">Tüm hakları saklıdır © 2026</div>
+			</div>
+		</div>
+	</footer>
 </body>
 </html>
