@@ -1,11 +1,16 @@
+---
+// Astro Ön Yüz (Frontmatter) Alanı
+// İleride buraya veri çekme (fetch), markdown yükleme vb. mantıklar gelecek.
+---
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Doğanın Teknolojisi: Polinasyon & Yazılım</title>
+	<title>Doğanın Teknolojisi: Kanatların Matematiği & Yazılım</title>
 	<style>
-		/* Renk Paleti ve Değişkenler */
+		/* CSS Değişkenleri & Temel Stiller */
 		:root {
 			--bg-black: #0d0d0d;         /* Tam Mat Siyah Zemin */
 			--bg-surface: #1c1c1c;       /* Mat Koyu Gri Yüzey */
@@ -23,6 +28,10 @@
 			padding: 0;
 		}
 
+		html {
+			scroll-behavior: smooth; /* Yağ gibi kayan yukarı çıkış efekti */
+		}
+
 		body {
 			background-color: var(--bg-black);
 			color: var(--text-main);
@@ -36,7 +45,7 @@
 			padding: 0 1.5rem;
 		}
 
-		/* Header & Arama Kutusu */
+		/* Header */
 		header {
 			position: fixed;
 			top: 0;
@@ -80,10 +89,13 @@
 			transform: scale(1.08);
 		}
 
+		/* Header Sağ Taraf (Arama & Dropdown) */
 		.header-right {
 			grid-column: 3;
 			display: flex;
 			justify-content: flex-end;
+			align-items: center;
+			gap: 0.75rem;
 		}
 
 		.search-btn {
@@ -114,7 +126,76 @@
 			stroke-linejoin: round;
 		}
 
-		/* Aşağı Açılan Arama Paneli */
+		/* Dropdown Menü Stilleri */
+		.dropdown {
+			position: relative;
+		}
+
+		.dropdown-trigger {
+			background: rgba(255, 255, 255, 0.03);
+			border: 1px solid var(--border-subtle);
+			color: var(--text-main);
+			padding: 0.45rem 0.85rem;
+			border-radius: 8px;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			gap: 0.4rem;
+			font-size: 0.88rem;
+			font-weight: 600;
+			transition: all 0.3s ease;
+		}
+
+		.dropdown-trigger:hover,
+		.dropdown:hover .dropdown-trigger {
+			border-color: rgba(245, 158, 11, 0.4);
+			background: rgba(255, 255, 255, 0.08);
+			color: var(--amber);
+		}
+
+		.dropdown-menu {
+			position: absolute;
+			top: calc(100% + 12px);
+			right: 0;
+			width: 200px;
+			background: var(--bg-surface);
+			border: 1px solid var(--border-subtle);
+			border-radius: 12px;
+			padding: 0.5rem;
+			box-shadow: 0 15px 35px -5px rgba(0,0,0,0.9), 0 8px 20px -4px var(--amber-glow);
+			opacity: 0;
+			visibility: hidden;
+			transform: translateY(-8px);
+			transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+			z-index: 1001;
+		}
+
+		/* Menü Hover Açılışı */
+		.dropdown:hover .dropdown-menu {
+			opacity: 1;
+			visibility: visible;
+			transform: translateY(0);
+		}
+
+		.dropdown-item {
+			display: flex;
+			align-items: center;
+			color: var(--text-main);
+			text-decoration: none;
+			padding: 0.6rem 0.8rem;
+			font-size: 0.9rem;
+			border-radius: 6px;
+			font-weight: 500;
+			transition: all 0.2s ease;
+		}
+
+		.dropdown-item:hover {
+			background: rgba(245, 158, 11, 0.12);
+			color: var(--amber);
+			padding-left: 1rem;
+		}
+
+		/* Arama Paneli */
 		.search-panel {
 			max-height: 0;
 			overflow: hidden;
@@ -130,8 +211,6 @@
 
 		.search-panel-inner {
 			padding: 1rem 0 1.5rem 0;
-			display: flex;
-			gap: 0.75rem;
 		}
 
 		.search-input {
@@ -150,7 +229,7 @@
 			border-color: rgba(245, 158, 11, 0.5);
 		}
 
-		/* Bölüm Derinlik Ayarları */
+		/* Bölümler */
 		section {
 			padding: 4rem 2rem;
 			margin-bottom: 2.5rem;
@@ -185,9 +264,11 @@
 		}
 
 		.subtitle {
-			font-size: 1.2rem;
-			color: var(--text-main);
+			font-size: 1.25rem;
+			color: var(--amber);
+			font-weight: 600;
 			margin-bottom: 1.25rem;
+			letter-spacing: 0.3px;
 		}
 
 		.description {
@@ -196,21 +277,19 @@
 			color: var(--text-muted);
 		}
 
-		/* Proje Kartları Grid */
+		/* Grid & Kartlar */
 		.grid {
 			display: grid;
 			grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 			gap: 1.75rem;
 		}
 
-		/* Yenilenen Amber Alt Işık Efektli Kart Yapısı */
 		.card {
 			position: relative;
 			background: var(--bg-surface);
 			border: 1px solid var(--border-subtle);
 			padding: 1.75rem;
 			border-radius: 12px;
-			/* Alt kenardan sızan ince amber glow */
 			box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.8), 0 12px 20px -6px var(--amber-glow);
 			transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 		}
@@ -218,7 +297,6 @@
 		.card:hover {
 			transform: translateY(-5px);
 			border-color: rgba(245, 158, 11, 0.4);
-			/* Hover halinde parlayan katmanlı amber ışık */
 			box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.9), 0 18px 28px -4px rgba(245, 158, 11, 0.65);
 		}
 
@@ -305,7 +383,7 @@
 			color: var(--text-muted);
 		}
 
-		/* Footer Stil Tanımlaması */
+		/* Footer */
 		footer {
 			margin-top: 4rem;
 			padding: 3rem 0;
@@ -361,7 +439,53 @@
 			color: var(--text-muted);
 		}
 
-		/* Mobile / Responsive Breakpoints */
+		/* Back To Top (Yukarı Dön) Butonu */
+		.back-to-top {
+			position: fixed;
+			bottom: 2rem;
+			right: 2rem;
+			width: 44px;
+			height: 44px;
+			background: var(--bg-surface);
+			border: 1px solid var(--border-subtle);
+			color: var(--amber);
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			text-decoration: none;
+			box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.8), 0 0 15px var(--amber-glow);
+			opacity: 0;
+			visibility: hidden;
+			transform: translateY(10px);
+			transition: all 0.3s ease;
+			z-index: 999;
+		}
+
+		.back-to-top.visible {
+			opacity: 1;
+			visibility: visible;
+			transform: translateY(0);
+		}
+
+		.back-to-top:hover {
+			background: var(--amber);
+			color: var(--bg-black);
+			transform: translateY(-3px);
+			box-shadow: 0 12px 25px -4px rgba(245, 158, 11, 0.8);
+		}
+
+		.back-to-top svg {
+			width: 20px;
+			height: 20px;
+			stroke: currentColor;
+			stroke-width: 2.5;
+			fill: none;
+			stroke-linecap: round;
+			stroke-linejoin: round;
+		}
+
+		/* Mobile Breakpoints */
 		@media (max-width: 768px) {
 			section {
 				padding: 2.5rem 1.25rem;
@@ -390,29 +514,26 @@
 			.stat-number {
 				font-size: 2.5rem;
 			}
+
+			.back-to-top {
+				bottom: 1.5rem;
+				right: 1.5rem;
+			}
 		}
 	</style>
 </head>
 <body>
 
 	<!-- Header -->
-	<header>
+	<header id="top">
 		<div class="container">
 			<div class="header-inner">
-				<div></div> <!-- Sol boşluk hizalama için -->
+				<div></div>
 				<a href="#" class="logo">
 					<div class="logo-icon">
-						<svg 
-							xmlns="http://www.w3.org/2000/svg" 
-							viewBox="0 0 48 48" 
-							width="30" 
-							height="30"
-						>
-							<!-- Sol Arka Parça (Platin / Açık Gri) -->
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="30" height="30">
 							<path fill="#e2e8f0" stroke="#0d0d0d" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M5.63 24l4.696-8.137h9.397L24.42 24l-4.698 8.137h-9.397z" />
-							<!-- Öndeki Üst Parça (Amber / Kehribar) -->
 							<path fill="#f59e0b" stroke="#0d0d0d" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M23.58 13.637L28.274 5.5h9.397l4.698 8.137l-4.698 8.137h-9.397z" />
-							<!-- Öndeki Alt Parça (Amber / Kehribar) -->
 							<path fill="#f59e0b" stroke="#0d0d0d" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M23.58 34.363l4.695-8.137h9.397l4.698 8.137l-4.698 8.137h-9.397z" />
 						</svg>
 					</div>
@@ -422,10 +543,25 @@
 					<button class="search-btn" id="searchToggle" aria-label="Arama Yap">
 						<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
 					</button>
+
+					<!-- Sağ Dropdown Menü -->
+					<div class="dropdown">
+						<button class="dropdown-trigger" aria-label="Menüyü Aç">
+							<span>Menü</span>
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+						</button>
+						<div class="dropdown-menu">
+							<a href="#top" class="dropdown-item">Ana Sayfa</a>
+							<a href="#blog" class="dropdown-item">Blog</a>
+							<a href="#urunler" class="dropdown-item">Ürünler</a>
+							<a href="#hakkimizda" class="dropdown-item">Hakkımda</a>
+							<a href="#iletisim" class="dropdown-item">İletişim</a>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
-		<!-- Tıklayınca Açılan Arama Paneli -->
+		<!-- Açılır Arama Paneli -->
 		<div class="search-panel" id="searchPanel">
 			<div class="container">
 				<div class="search-panel-inner">
@@ -438,14 +574,14 @@
 	<div class="container">
 		<!-- Hero Bölümü -->
 		<section class="hero">
-			<h1>Doğanın Teknolojisi:<br/>Polinasyon & Yazılım</h1>
-			<p class="subtitle">Ekosistemlerin geleceğini kodluyor, arıların izinde dijital çözümler üretiyorum.</p>
-			<p class="description">Ben bir doğa araştırmacısı ve web geliştiricisiyim. Biyoçeşitliliğin korunması için teknolojinin gücünü kullanıyor, sürdürülebilir bir gelecek inşa ediyorum.</p>
+			<h1>Doğanın Teknolojisi</h1>
+			<p class="subtitle">Kanatların Matematiği & Yazılım</p>
+			<p class="description">Ben bir doğa araştırmacısı ve web geliştiricisiyim. Ekosistemlerin geleceğini kodluyor, arıların izinde dijital çözümler üretiyorum.</p>
 		</section>
 
-		<!-- Projeler -->
-		<section>
-			<h2>Öne Çıkan Projeler</h2>
+		<!-- Ürünler & Projeler -->
+		<section id="urunler">
+			<h2>Öne Çıkan Ürünler & Projeler</h2>
 			<div class="grid">
 				<div class="card">
 					<h3>BeeTrack - Kovan Takip</h3>
@@ -463,15 +599,25 @@
 		</section>
 
 		<!-- Sayaçlar -->
-		<section class="stats-grid">
-			<div>
-				<div class="stat-number">142,840+</div>
-				<div class="stat-label">Simüle Edilen Arı Popülasyonu</div>
+		<section>
+			<div class="stats-grid">
+				<div>
+					<div class="stat-number">142,840+</div>
+					<div class="stat-label">Simüle Edilen Arı Popülasyonu</div>
+				</div>
+				<div>
+					<div class="stat-number">12</div>
+					<div class="stat-label">Tamamlanan Çevre Projesi</div>
+				</div>
 			</div>
-			<div>
-				<div class="stat-number">12</div>
-				<div class="stat-label">Tamamlanan Çevre Projesi</div>
-			</div>
+		</section>
+
+		<!-- Hakkımızda -->
+		<section id="hakkimizda">
+			<h2>Hakkımda</h2>
+			<p class="description" style="text-align: left; max-width: 100%;">
+				Doğadaki kusursuz geometriden ve arıların koloni zekasından ilham alarak modern yazılım mimarileri geliştiriyorum. Hedefim; teknoloji ile biyoçeşitliliği buluşturan, sürdürülebilir ve doğa odaklı sistemler inşa etmek.
+			</p>
 		</section>
 
 		<!-- Teknolojiler -->
@@ -488,7 +634,7 @@
 		</section>
 
 		<!-- Blog -->
-		<section>
+		<section id="blog">
 			<h2>Son Blog Yazıları</h2>
 			<div class="blog-item">
 				<h3>Arıların Gizli Mühendisliği</h3>
@@ -504,32 +650,26 @@
 	</div>
 
 	<!-- Footer -->
-	<footer>
+	<footer id="iletisim">
 		<div class="container">
 			<div class="footer-content">
 				<div class="footer-brand">Polinasyon</div>
 				<div class="social-links">
-					<!-- Instagram SVG -->
 					<a href="#" class="social-icon" aria-label="Instagram">
 						<svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
 					</a>
-					<!-- YouTube SVG -->
 					<a href="#" class="social-icon" aria-label="YouTube">
 						<svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
 					</a>
-					<!-- Facebook SVG -->
 					<a href="#" class="social-icon" aria-label="Facebook">
 						<svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
 					</a>
-					<!-- WhatsApp SVG -->
 					<a href="#" class="social-icon" aria-label="WhatsApp">
 						<svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.301-.15-1.785-.881-2.062-.982-.276-.101-.477-.15-.678.15-.2.3-.777.982-.953 1.183-.175.201-.351.226-.652.076-.301-.15-1.27-.468-2.42-1.494-.894-.798-1.498-1.784-1.674-2.085-.175-.301-.019-.464.131-.613.135-.134.301-.351.451-.527.15-.176.2-.301.301-.502.101-.201.051-.377-.025-.527-.075-.15-.678-1.635-.929-2.235-.244-.583-.493-.505-.678-.514-.176-.008-.377-.008-.578-.008-.201 0-.527.075-.803.377-.276.301-1.054 1.03-1.054 2.513 0 1.483 1.08 2.916 1.23 3.117.15.201 2.124 3.243 5.147 4.548.719.311 1.281.497 1.719.636.722.229 1.378.197 1.897.12.578-.086 1.785-.729 2.036-1.432.251-.703.251-1.306.176-1.432-.075-.126-.276-.201-.577-.351z"/></svg>
 					</a>
-					<!-- X / Twitter SVG -->
 					<a href="#" class="social-icon" aria-label="X">
 						<svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
 					</a>
-					<!-- Threads SVG -->
 					<a href="#" class="social-icon" aria-label="Threads">
 						<svg viewBox="0 0 24 24"><path d="M12.186 24c-3.18 0-5.753-1.04-7.442-3.01C3.256 19.22 2.5 16.313 2.5 12.35 2.5 8.163 3.328 5.11 4.966 3.26 6.604 1.412 9.07.45 12.316.45c3.292 0 5.792.936 7.43 2.782 1.638 1.846 2.458 4.636 2.438 8.293h-2.31c.018-3.08-.63-5.32-1.928-6.66-1.297-1.34-3.23-2.01-5.748-2.01-2.52 0-4.425.75-5.663 2.23-1.238 1.48-1.857 4.02-1.857 7.55 0 3.29.58 5.64 1.74 6.99 1.16 1.35 2.91 2.03 5.2 2.03 2.37 0 4.1-.73 5.15-2.18.72-1 1.1-2.37 1.14-4.11h-6.23c-1.57 0-2.8-.39-3.66-1.16-.86-.77-1.29-1.82-1.29-3.15 0-1.33.45-2.38 1.35-3.15.9-.77 2.15-1.16 3.75-1.16 1.63 0 2.89.41 3.77 1.23.88.82 1.35 1.95 1.41 3.39v.36c0 2.49-.66 4.45-1.98 5.88C17.38 22.84 15.1 24 12.186 24zm-.13-9.98c-.89 0-1.56.2-2.01.6-.45.4-.67.95-.67 1.65 0 .68.22 1.22.66 1.62.44.4 1.11.6 2.02.6.9 0 1.58-.2 2.04-.6.46-.4.69-.95.69-1.65 0-.69-.23-1.24-.69-1.63-.46-.39-1.14-.59-2.04-.59z"/></svg>
 					</a>
@@ -539,16 +679,32 @@
 		</div>
 	</footer>
 
-	<!-- Arama Kutusu Açma/Kapatma Scripti -->
+	<!-- Back to Top (Yukarı Dön) Butonu -->
+	<a href="#top" class="back-to-top" id="backToTop" aria-label="Yukarı Çık">
+		<svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
+	</a>
+
+	<!-- İstemci Tarafı Küçük JS (Arama & Back to Top) -->
 	<script>
+		// Arama Paneli Toggle
 		const searchToggle = document.getElementById('searchToggle');
 		const searchPanel = document.getElementById('searchPanel');
 		const searchInput = document.getElementById('searchInput');
 
-		searchToggle.addEventListener('click', () => {
-			searchPanel.classList.toggle('active');
-			if (searchPanel.classList.contains('active')) {
-				setTimeout(() => searchInput.focus(), 100);
+		searchToggle?.addEventListener('click', () => {
+			searchPanel?.classList.toggle('active');
+			if (searchPanel?.classList.contains('active')) {
+				setTimeout(() => searchInput?.focus(), 100);
+			}
+		});
+
+		// Back To Top Buton Kontrolü (300px aşağı kayınca belirir)
+		const backToTopBtn = document.getElementById('backToTop');
+		window.addEventListener('scroll', () => {
+			if (window.scrollY > 300) {
+				backToTopBtn?.classList.add('visible');
+			} else {
+				backToTopBtn?.classList.remove('visible');
 			}
 		});
 	</script>
