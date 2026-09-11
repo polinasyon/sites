@@ -1,79 +1,203 @@
 ---
-import { SITE_TITLE } from '../consts';
+// index.astro - Tüm arayüz tek dosyada birleştirildi
 ---
 
-<!-- Header Bandı -->
-<header class="block w-full bg-[#1c1c1c] border-b border-white/5 sticky top-0 z-50 shadow-2xl backdrop-blur-md">
-	<nav class="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between w-full">
-		
-		<!-- Logo ve Marka İsmi -->
-		<a href="/" class="flex items-center gap-3 no-underline group shrink-0">
-			<!-- Mat Çerçeve -->
-			<div class="w-10 h-10 rounded-xl flex items-center justify-center bg-[#0d0d0d] border border-white/10 transition-colors group-hover:border-white/20 overflow-hidden shrink-0">
-				<!-- Üçlü Petek SVG Logo -->
-				<svg 
-					xmlns="http://www.w3.org/2000/svg" 
-					viewBox="0 0 48 48" 
-					width="30" 
-					height="30" 
-					class="transition-transform group-hover:scale-105"
-				>
-					<path fill="#e2e8f0" stroke="#0d0d0d" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M5.63 24l4.696-8.137h9.397L24.42 24l-4.698 8.137h-9.397z" />
-					<path fill="#94a3b8" stroke="#0d0d0d" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M23.58 13.637L28.274 5.5h9.397l4.698 8.137l-4.698 8.137h-9.397z" />
-					<path fill="#94a3b8" stroke="#0d0d0d" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M23.58 34.363l4.695-8.137h9.397l4.698 8.137l-4.698 8.137h-9.397z" />
-				</svg>
-			</div>
-			<!-- Marka Yazısı -->
-			<span class="text-lg font-bold tracking-wider text-[#e2e8f0] uppercase shrink-0">
-				POLİNASYON <span class="text-[#94a3b8] font-normal">X</span>
-			</span>
-		</a>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Doğanın Teknolojisi: Polinasyon & Yazılım</title>
+</head>
+<body class="bg-[#0d0d0d] text-[#e2e8f0] font-sans antialiased min-h-screen flex flex-col selection:bg-white/20">
 
-		<!-- Arama Butonu (Sağ Köşe) -->
-		<button 
-			id="search-toggle"
-			aria-label="Arama Yap"
-			class="p-2.5 rounded-xl bg-[#0d0d0d] border border-white/10 text-[#94a3b8] hover:text-[#e2e8f0] hover:border-white/20 transition-all cursor-pointer"
-		>
-			<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-				<path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-			</svg>
-		</button>
+	<!-- 1. HEADER ALANI -->
+	<header class="w-full bg-[#1c1c1c] border-b border-white/10 sticky top-0 z-50 shadow-2xl">
+		<nav class="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between w-full">
+			
+			<!-- Logo & Marka -->
+			<a href="/" class="flex items-center gap-3 no-underline shrink-0">
+				<div class="w-10 h-10 rounded-xl flex items-center justify-center bg-[#0d0d0d] border border-white/10 overflow-hidden shrink-0">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="w-6 h-6 shrink-0">
+						<path fill="#e2e8f0" stroke="#0d0d0d" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M5.63 24l4.696-8.137h9.397L24.42 24l-4.698 8.137h-9.397z" />
+						<path fill="#94a3b8" stroke="#0d0d0d" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M23.58 13.637L28.274 5.5h9.397l4.698 8.137l-4.698 8.137h-9.397z" />
+						<path fill="#94a3b8" stroke="#0d0d0d" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M23.58 34.363l4.695-8.137h9.397l4.698 8.137l-4.698 8.137h-9.397z" />
+					</svg>
+				</div>
+				<span class="text-lg font-bold tracking-wider text-[#e2e8f0] uppercase shrink-0">
+					POLİNASYON <span class="text-[#94a3b8] font-normal">X</span>
+				</span>
+			</a>
 
-	</nav>
-
-	<!-- Açılır Arama Alanı -->
-	<div 
-		id="search-box" 
-		class="hidden w-full bg-[#0d0d0d] border-b border-white/10 transition-all duration-300 overflow-hidden"
-	>
-		<div class="max-w-4xl mx-auto px-6 py-4">
-			<form action="/search" method="GET" class="relative flex items-center">
-				<input 
-					type="text" 
-					name="q" 
-					placeholder="Sitede ara (örn: BeeTrack, Astro, Polinasyon)..." 
-					class="w-full bg-[#1c1c1c] text-[#e2e8f0] placeholder-[#94a3b8] px-4 py-3 pl-11 rounded-xl border border-white/10 focus:outline-none focus:border-white/30 text-sm transition-all"
-					autocomplete="off"
-				/>
-				<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 absolute left-3.5 text-[#94a3b8]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+			<!-- Arama Butonu -->
+			<button 
+				id="search-toggle"
+				aria-label="Arama Yap"
+				class="p-2.5 rounded-xl bg-[#0d0d0d] border border-white/10 text-[#e2e8f0] hover:border-white/30 transition-all cursor-pointer flex items-center justify-center shrink-0"
+			>
+				<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
 					<path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
 				</svg>
-			</form>
+			</button>
+
+		</nav>
+
+		<!-- Açılır Arama Çubuğu -->
+		<div id="search-box" class="hidden w-full bg-[#0d0d0d] border-b border-white/10 transition-all">
+			<div class="max-w-4xl mx-auto px-6 py-4">
+				<form action="/search" method="GET" class="relative flex items-center w-full">
+					<input 
+						type="text" 
+						name="q" 
+						placeholder="Sitede ara (örn: BeeTrack, Astro, Polinasyon)..." 
+						class="w-full bg-[#1c1c1c] text-[#e2e8f0] placeholder-[#94a3b8] px-4 py-3 pl-11 rounded-xl border border-white/10 focus:outline-none focus:border-white/30 text-sm"
+						autocomplete="off"
+					/>
+					<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 absolute left-3.5 text-[#94a3b8] pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+					</svg>
+				</form>
+			</div>
 		</div>
-	</div>
-</header>
+	</header>
 
-<!-- Tıklama Mantığı -->
-<script>
-	const searchToggle = document.getElementById('search-toggle');
-	const searchBox = document.getElementById('search-box');
+	<!-- 2. ANA İÇERİK ALANI -->
+	<main class="max-w-4xl mx-auto px-6 py-8 flex-1 w-full space-y-10">
 
-	searchToggle?.addEventListener('click', () => {
-		searchBox?.classList.toggle('hidden');
-		if (!searchBox?.classList.contains('hidden')) {
-			const input = searchBox?.querySelector('input');
-			input?.focus();
-		}
-	});
-</script>
+		<!-- Hero Bölümü -->
+		<section class="text-center py-12 px-6 rounded-2xl bg-gradient-to-b from-[#1c1c1c]/60 to-[#0d0d0d]/20 border border-white/5 shadow-2xl">
+			<h1 class="text-3xl md:text-4xl font-extrabold text-[#e2e8f0] leading-tight mb-4">
+				Doğanın Teknolojisi:<br/>Polinasyon & Yazılım
+			</h1>
+			<p class="text-lg text-[#e2e8f0] mb-4 max-w-xl mx-auto">
+				Ekosistemlerin geleceğini kodluyor, arıların izinde dijital çözümler üretiyorum.
+			</p>
+			<p class="text-sm text-[#94a3b8] max-w-lg mx-auto">
+				Ben bir doğa araştırmacısı ve web geliştiricisiyim. Biyoçeşitliliğin korunması için teknolojinin gücünü kullanıyor, sürdürülebilir bir gelecek inşa ediyorum.
+			</p>
+		</section>
+
+		<!-- Öne Çıkan Projeler -->
+		<section class="p-6 md:p-8 rounded-2xl bg-gradient-to-b from-[#1c1c1c]/40 to-[#141414]/60 border border-white/5 shadow-xl">
+			<h2 class="text-2xl font-bold text-[#e2e8f0] mb-6">Öne Çıkan Projeler</h2>
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+				<div class="p-6 rounded-xl bg-[#1c1c1c] border border-white/5 hover:border-white/20 transition-all hover:-translate-y-1">
+					<h3 class="text-lg font-semibold text-[#e2e8f0] mb-2">BeeTrack - Kovan Takip</h3>
+					<p class="text-sm text-[#94a3b8]">Nesnelerin İnterneti (IoT) tabanlı, arı kovanlarının sıcaklık ve nem dengesini anlık izleyen mobil uygulama.</p>
+				</div>
+				<div class="p-6 rounded-xl bg-[#1c1c1c] border border-white/5 hover:border-white/20 transition-all hover:-translate-y-1">
+					<h3 class="text-lg font-semibold text-[#e2e8f0] mb-2">PolenAtlas</h3>
+					<p class="text-sm text-[#94a3b8]">Yapay zeka algoritmaları kullanarak bitki türlerini ve polen yayılım haritalarını çıkaran web platformu.</p>
+				</div>
+				<div class="p-6 rounded-xl bg-[#1c1c1c] border border-white/5 hover:border-white/20 transition-all hover:-translate-y-1">
+					<h3 class="text-lg font-semibold text-[#e2e8f0] mb-2">EkoSimülatör</h3>
+					<p class="text-sm text-[#94a3b8]">Arı popülasyonunun tarımsal üretime etkisini simüle eden interaktif analiz aracı.</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- Sayaçlar -->
+		<section class="p-6 md:p-8 rounded-2xl bg-gradient-to-b from-[#1c1c1c]/40 to-[#141414]/60 border border-white/5 shadow-xl">
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
+				<div>
+					<div class="text-4xl font-extrabold text-[#e2e8f0] mb-1">142,840+</div>
+					<div class="text-sm text-[#94a3b8]">Simüle Edilen Arı Popülasyonu</div>
+				</div>
+				<div>
+					<div class="text-4xl font-extrabold text-[#e2e8f0] mb-1">12</div>
+					<div class="text-sm text-[#94a3b8]">Tamamlanan Çevre Projesi</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Teknolojiler -->
+		<section class="p-6 md:p-8 rounded-2xl bg-gradient-to-b from-[#1c1c1c]/40 to-[#141414]/60 border border-white/5 shadow-xl">
+			<h2 class="text-2xl font-bold text-[#e2e8f0] mb-6">Kullanılan Teknolojiler</h2>
+			<div class="flex flex-wrap gap-2.5">
+				<span class="px-3.5 py-1.5 rounded-full bg-[#1c1c1c] border border-white/5 text-xs text-[#e2e8f0]">Astro</span>
+				<span class="px-3.5 py-1.5 rounded-full bg-[#1c1c1c] border border-white/5 text-xs text-[#e2e8f0]">Tailwind CSS</span>
+				<span class="px-3.5 py-1.5 rounded-full bg-[#1c1c1c] border border-white/5 text-xs text-[#e2e8f0]">HTML5 & CSS3</span>
+				<span class="px-3.5 py-1.5 rounded-full bg-[#1c1c1c] border border-white/5 text-xs text-[#e2e8f0]">JavaScript</span>
+				<span class="px-3.5 py-1.5 rounded-full bg-[#1c1c1c] border border-white/5 text-xs text-[#e2e8f0]">Git</span>
+				<span class="px-3.5 py-1.5 rounded-full bg-[#1c1c1c] border border-white/5 text-xs text-[#e2e8f0]">Yapay Zeka</span>
+			</div>
+		</section>
+
+		<!-- Son Blog Yazıları -->
+		<section class="p-6 md:p-8 rounded-2xl bg-gradient-to-b from-[#1c1c1c]/40 to-[#141414]/60 border border-white/5 shadow-xl">
+			<h2 class="text-2xl font-bold text-[#e2e8f0] mb-6">Son Blog Yazıları</h2>
+			<div class="space-y-6">
+				<div>
+					<h3 class="text-lg font-semibold text-[#e2e8f0] hover:opacity-80 transition-opacity cursor-pointer">Arıların Gizli Mühendisliği</h3>
+					<div class="text-xs text-[#94a3b8] my-1">10 Eylül 2026 • 3 dk okuma</div>
+					<p class="text-sm text-[#94a3b8]">Tek bir bal arısının tüm koloniyi ayakta tutan matematiksel veri akışını nasıl yönettiğini inceliyoruz.</p>
+				</div>
+				<hr class="border-white/5" />
+				<div>
+					<h3 class="text-lg font-semibold text-[#e2e8f0] hover:opacity-80 transition-opacity cursor-pointer">Neden Astro Framework?</h3>
+					<div class="text-xs text-[#94a3b8] my-1">28 Ağustos 2026 • 5 dk okuma</div>
+					<p class="text-sm text-[#94a3b8]">İçerik odaklı doğa projelerinde neden en hızlı ve en hafif framework olan Astro'yu tercih ettim?</p>
+				</div>
+			</div>
+		</section>
+
+	</main>
+
+	<!-- 3. FOOTER ALANI -->
+	<footer class="w-full bg-[#0d0d0d] border-t border-white/5 py-10 mt-auto">
+		<div class="max-w-4xl mx-auto px-6 flex flex-col items-center justify-center gap-6 text-center">
+			
+			<div class="text-base font-semibold text-[#e2e8f0] tracking-wide">
+				Polinasyon X
+			</div>
+
+			<!-- Sosyal Medya İkonları -->
+			<div class="flex items-center gap-5">
+				<!-- X / Twitter -->
+				<a href="#" class="text-[#94a3b8] hover:text-[#e2e8f0] hover:-translate-y-0.5 transition-all" aria-label="X">
+					<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+				</a>
+				<!-- Instagram -->
+				<a href="#" class="text-[#94a3b8] hover:text-[#e2e8f0] hover:-translate-y-0.5 transition-all" aria-label="Instagram">
+					<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+				</a>
+				<!-- YouTube -->
+				<a href="#" class="text-[#94a3b8] hover:text-[#e2e8f0] hover:-translate-y-0.5 transition-all" aria-label="YouTube">
+					<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+				</a>
+				<!-- Facebook -->
+				<a href="#" class="text-[#94a3b8] hover:text-[#e2e8f0] hover:-translate-y-0.5 transition-all" aria-label="Facebook">
+					<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+				</a>
+				<!-- GitHub -->
+				<a href="#" class="text-[#94a3b8] hover:text-[#e2e8f0] hover:-translate-y-0.5 transition-all" aria-label="GitHub">
+					<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+				</a>
+				<!-- LinkedIn -->
+				<a href="#" class="text-[#94a3b8] hover:text-[#e2e8f0] hover:-translate-y-0.5 transition-all" aria-label="LinkedIn">
+					<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+				</a>
+			</div>
+
+			<div class="text-xs text-[#94a3b8]">
+				Tüm hakları saklıdır © 2026
+			</div>
+
+		</div>
+	</footer>
+
+	<!-- Interactive Scripts -->
+	<script>
+		const searchToggle = document.getElementById('search-toggle');
+		const searchBox = document.getElementById('search-box');
+
+		searchToggle?.addEventListener('click', () => {
+			searchBox?.classList.toggle('hidden');
+			if (!searchBox?.classList.contains('hidden')) {
+				const input = searchBox?.querySelector('input');
+				input?.focus();
+			}
+		});
+	</script>
+</body>
+</html>
