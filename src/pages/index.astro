@@ -1,203 +1,400 @@
----
-// index.astro - Tüm arayüz tek dosyada birleştirildi
----
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Doğanın Teknolojisi: Polinasyon & Yazılım</title>
+	<style>
+		/* Renk Paleti ve Değişkenler */
+		:root {
+			--bg-black: #0d0d0d;         /* Tam Mat Siyah Zemin */
+			--bg-surface: #1c1c1c;       /* Mat Koyu Gri Yüzey */
+			--text-main: #e2e8f0;        /* Platin / Mat Açık Gri */
+			--text-muted: #94a3b8;       /* Mat Dumanlı Gri */
+			--border-subtle: rgba(255, 255, 255, 0.05);
+			--surface-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05), 0 10px 30px -10px rgba(0, 0, 0, 0.8);
+		}
+
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			background-color: var(--bg-black);
+			color: var(--text-main);
+			font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+			line-height: 1.6;
+		}
+
+		.container {
+			max-width: 1000px;
+			margin: 0 auto;
+			padding: 0 1.5rem;
+		}
+
+		/* Sabit Buton */
+		.fixed-btn {
+			position: fixed;
+			top: 1.25rem;
+			left: 1.25rem;
+			background: rgba(28, 28, 28, 0.85);
+			border: 1px solid var(--border-subtle);
+			padding: 0.6rem 1.2rem;
+			border-radius: 8px;
+			color: var(--text-main);
+			text-decoration: none;
+			font-size: 0.875rem;
+			font-weight: 500;
+			backdrop-filter: blur(12px);
+			-webkit-backdrop-filter: blur(12px);
+			transition: all 0.3s ease;
+			z-index: 100;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+		}
+
+		.fixed-btn:hover {
+			background: var(--bg-surface);
+			border-color: rgba(255, 255, 255, 0.2);
+			transform: translateY(-2px);
+		}
+
+		/* Bölüm Derinlik Ayarları */
+		section {
+			padding: 4rem 2rem;
+			margin-bottom: 2.5rem;
+			background: linear-gradient(180deg, rgba(28, 28, 28, 0.4) 0%, rgba(20, 20, 20, 0.6) 100%);
+			border-top: 1px solid var(--border-subtle);
+			border-radius: 16px;
+			box-shadow: var(--surface-shadow);
+		}
+
+		h2 {
+			color: var(--text-main);
+			font-size: 1.75rem;
+			margin-bottom: 1.5rem;
+			font-weight: 700;
+		}
+
+		/* Hero Alanı */
+		.hero {
+			text-align: center;
+			padding-top: 6rem;
+			padding-bottom: 4rem;
+			margin-top: 2rem;
+			background: linear-gradient(180deg, rgba(28, 28, 28, 0.6) 0%, rgba(13, 13, 13, 0.2) 100%);
+		}
+
+		h1 {
+			font-size: 2.75rem;
+			line-height: 1.2;
+			margin-bottom: 1rem;
+			color: var(--text-main);
+			font-weight: 800;
+		}
+
+		.subtitle {
+			font-size: 1.2rem;
+			color: var(--text-main);
+			margin-bottom: 1.25rem;
+		}
+
+		.description {
+			max-width: 600px;
+			margin: 0 auto;
+			color: var(--text-muted);
+		}
+
+		/* Proje Kartları Grid */
+		.grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+			gap: 1.5rem;
+		}
+
+		.card {
+			background: var(--bg-surface);
+			border: 1px solid var(--border-subtle);
+			padding: 1.75rem;
+			border-radius: 12px;
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+			transition: all 0.3s ease;
+		}
+
+		.card:hover {
+			transform: translateY(-4px);
+			border-color: rgba(255, 255, 255, 0.15);
+			box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+		}
+
+		.card h3 {
+			color: var(--text-main);
+			margin-bottom: 0.75rem;
+		}
+
+		.card p {
+			color: var(--text-muted);
+			font-size: 0.95rem;
+		}
+
+		/* Sayaçlar */
+		.stats-grid {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			text-align: center;
+			gap: 2rem;
+		}
+
+		.stat-number {
+			font-size: 3rem;
+			font-weight: 800;
+			color: var(--text-main);
+			margin-bottom: 0.25rem;
+		}
+
+		.stat-label {
+			color: var(--text-muted);
+			font-size: 0.95rem;
+		}
+
+		/* Rozetler */
+		.badges {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.6rem;
+		}
+
+		.badge {
+			background: var(--bg-surface);
+			border: 1px solid var(--border-subtle);
+			padding: 0.4rem 0.9rem;
+			border-radius: 20px;
+			font-size: 0.85rem;
+			color: var(--text-main);
+			transition: all 0.3s ease;
+		}
+
+		.badge:hover {
+			border-color: rgba(255, 255, 255, 0.2);
+			background: rgba(255, 255, 255, 0.05);
+		}
+
+		/* Blog */
+		.blog-item {
+			margin-bottom: 2rem;
+		}
+
+		.blog-item:last-child {
+			margin-bottom: 0;
+		}
+
+		.blog-item h3 {
+			color: var(--text-main);
+			margin-bottom: 0.4rem;
+			transition: opacity 0.3s ease;
+			cursor: pointer;
+		}
+
+		.blog-item h3:hover {
+			opacity: 0.8;
+		}
+
+		.blog-meta {
+			color: var(--text-muted);
+			font-size: 0.85rem;
+			margin-bottom: 0.5rem;
+		}
+
+		.blog-item p {
+			color: var(--text-muted);
+		}
+
+		/* Footer Stil Tanımlaması */
+		footer {
+			margin-top: 4rem;
+			padding: 3rem 0;
+			border-top: 1px solid var(--border-subtle);
+			background: var(--bg-black);
+		}
+
+		.footer-content {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			gap: 1.5rem;
+			text-align: center;
+		}
+
+		.footer-brand {
+			font-size: 1.1rem;
+			font-weight: 600;
+			color: var(--text-main);
+			letter-spacing: 0.5px;
+		}
+
+		.social-links {
+			display: flex;
+			gap: 1.25rem;
+			align-items: center;
+		}
+
+		.social-icon {
+			color: var(--text-muted);
+			transition: all 0.3s ease;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.social-icon svg {
+			width: 22px;
+			height: 22px;
+			fill: currentColor;
+		}
+
+		.social-icon:hover {
+			color: var(--text-main);
+			transform: translateY(-2px);
+		}
+
+		.footer-copy {
+			font-size: 0.85rem;
+			color: var(--text-muted);
+		}
+
+		/* Mobile / Responsive Breakpoints */
+		@media (max-width: 768px) {
+			section {
+				padding: 2.5rem 1.25rem;
+				margin-bottom: 1.5rem;
+				border-radius: 12px;
+			}
+
+			.hero {
+				padding-top: 5rem;
+			}
+
+			h1 {
+				font-size: 2.1rem;
+			}
+
+			.subtitle {
+				font-size: 1.05rem;
+			}
+
+			.fixed-btn {
+				position: static;
+				display: inline-block;
+				margin: 1.5rem 0 0 1.5rem;
+			}
+
+			.stats-grid {
+				grid-template-columns: 1fr;
+				gap: 1.5rem;
+			}
+
+			.stat-number {
+				font-size: 2.5rem;
+			}
+		}
+	</style>
 </head>
-<body class="bg-[#0d0d0d] text-[#e2e8f0] font-sans antialiased min-h-screen flex flex-col selection:bg-white/20">
+<body>
+	<!-- Sabit Buton -->
+	<a href="#" class="fixed-btn">Ana Sayfa Premium</a>
 
-	<!-- 1. HEADER ALANI -->
-	<header class="w-full bg-[#1c1c1c] border-b border-white/10 sticky top-0 z-50 shadow-2xl">
-		<nav class="max-w-4xl mx-auto px-6 h-16 flex items-center justify-between w-full">
-			
-			<!-- Logo & Marka -->
-			<a href="/" class="flex items-center gap-3 no-underline shrink-0">
-				<div class="w-10 h-10 rounded-xl flex items-center justify-center bg-[#0d0d0d] border border-white/10 overflow-hidden shrink-0">
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="w-6 h-6 shrink-0">
-						<path fill="#e2e8f0" stroke="#0d0d0d" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M5.63 24l4.696-8.137h9.397L24.42 24l-4.698 8.137h-9.397z" />
-						<path fill="#94a3b8" stroke="#0d0d0d" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M23.58 13.637L28.274 5.5h9.397l4.698 8.137l-4.698 8.137h-9.397z" />
-						<path fill="#94a3b8" stroke="#0d0d0d" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M23.58 34.363l4.695-8.137h9.397l4.698 8.137l-4.698 8.137h-9.397z" />
-					</svg>
-				</div>
-				<span class="text-lg font-bold tracking-wider text-[#e2e8f0] uppercase shrink-0">
-					POLİNASYON <span class="text-[#94a3b8] font-normal">X</span>
-				</span>
-			</a>
-
-			<!-- Arama Butonu -->
-			<button 
-				id="search-toggle"
-				aria-label="Arama Yap"
-				class="p-2.5 rounded-xl bg-[#0d0d0d] border border-white/10 text-[#e2e8f0] hover:border-white/30 transition-all cursor-pointer flex items-center justify-center shrink-0"
-			>
-				<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-					<path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-				</svg>
-			</button>
-
-		</nav>
-
-		<!-- Açılır Arama Çubuğu -->
-		<div id="search-box" class="hidden w-full bg-[#0d0d0d] border-b border-white/10 transition-all">
-			<div class="max-w-4xl mx-auto px-6 py-4">
-				<form action="/search" method="GET" class="relative flex items-center w-full">
-					<input 
-						type="text" 
-						name="q" 
-						placeholder="Sitede ara (örn: BeeTrack, Astro, Polinasyon)..." 
-						class="w-full bg-[#1c1c1c] text-[#e2e8f0] placeholder-[#94a3b8] px-4 py-3 pl-11 rounded-xl border border-white/10 focus:outline-none focus:border-white/30 text-sm"
-						autocomplete="off"
-					/>
-					<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 absolute left-3.5 text-[#94a3b8] pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-					</svg>
-				</form>
-			</div>
-		</div>
-	</header>
-
-	<!-- 2. ANA İÇERİK ALANI -->
-	<main class="max-w-4xl mx-auto px-6 py-8 flex-1 w-full space-y-10">
-
+	<div class="container">
 		<!-- Hero Bölümü -->
-		<section class="text-center py-12 px-6 rounded-2xl bg-gradient-to-b from-[#1c1c1c]/60 to-[#0d0d0d]/20 border border-white/5 shadow-2xl">
-			<h1 class="text-3xl md:text-4xl font-extrabold text-[#e2e8f0] leading-tight mb-4">
-				Doğanın Teknolojisi:<br/>Polinasyon & Yazılım
-			</h1>
-			<p class="text-lg text-[#e2e8f0] mb-4 max-w-xl mx-auto">
-				Ekosistemlerin geleceğini kodluyor, arıların izinde dijital çözümler üretiyorum.
-			</p>
-			<p class="text-sm text-[#94a3b8] max-w-lg mx-auto">
-				Ben bir doğa araştırmacısı ve web geliştiricisiyim. Biyoçeşitliliğin korunması için teknolojinin gücünü kullanıyor, sürdürülebilir bir gelecek inşa ediyorum.
-			</p>
+		<section class="hero">
+			<h1>Doğanın Teknolojisi:<br/>Polinasyon & Yazılım</h1>
+			<p class="subtitle">Ekosistemlerin geleceğini kodluyor, arıların izinde dijital çözümler üretiyorum.</p>
+			<p class="description">Ben bir doğa araştırmacısı ve web geliştiricisiyim. Biyoçeşitliliğin korunması için teknolojinin gücünü kullanıyor, sürdürülebilir bir gelecek inşa ediyorum.</p>
 		</section>
 
-		<!-- Öne Çıkan Projeler -->
-		<section class="p-6 md:p-8 rounded-2xl bg-gradient-to-b from-[#1c1c1c]/40 to-[#141414]/60 border border-white/5 shadow-xl">
-			<h2 class="text-2xl font-bold text-[#e2e8f0] mb-6">Öne Çıkan Projeler</h2>
-			<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-				<div class="p-6 rounded-xl bg-[#1c1c1c] border border-white/5 hover:border-white/20 transition-all hover:-translate-y-1">
-					<h3 class="text-lg font-semibold text-[#e2e8f0] mb-2">BeeTrack - Kovan Takip</h3>
-					<p class="text-sm text-[#94a3b8]">Nesnelerin İnterneti (IoT) tabanlı, arı kovanlarının sıcaklık ve nem dengesini anlık izleyen mobil uygulama.</p>
+		<!-- Projeler -->
+		<section>
+			<h2>Öne Çıkan Projeler</h2>
+			<div class="grid">
+				<div class="card">
+					<h3>BeeTrack - Kovan Takip</h3>
+					<p>Nesnelerin İnterneti (IoT) tabanlı, arı kovanlarının sıcaklık ve nem dengesini anlık izleyen mobil uygulama.</p>
 				</div>
-				<div class="p-6 rounded-xl bg-[#1c1c1c] border border-white/5 hover:border-white/20 transition-all hover:-translate-y-1">
-					<h3 class="text-lg font-semibold text-[#e2e8f0] mb-2">PolenAtlas</h3>
-					<p class="text-sm text-[#94a3b8]">Yapay zeka algoritmaları kullanarak bitki türlerini ve polen yayılım haritalarını çıkaran web platformu.</p>
+				<div class="card">
+					<h3>PolenAtlas</h3>
+					<p>Yapay zeka algoritmaları kullanarak bitki türlerini ve polen yayılım haritalarını çıkaran web platformu.</p>
 				</div>
-				<div class="p-6 rounded-xl bg-[#1c1c1c] border border-white/5 hover:border-white/20 transition-all hover:-translate-y-1">
-					<h3 class="text-lg font-semibold text-[#e2e8f0] mb-2">EkoSimülatör</h3>
-					<p class="text-sm text-[#94a3b8]">Arı popülasyonunun tarımsal üretime etkisini simüle eden interaktif analiz aracı.</p>
+				<div class="card">
+					<h3>EkoSimülatör</h3>
+					<p>Arı popülasyonunun tarımsal üretime etkisini simüle eden interaktif analiz aracı.</p>
 				</div>
 			</div>
 		</section>
 
 		<!-- Sayaçlar -->
-		<section class="p-6 md:p-8 rounded-2xl bg-gradient-to-b from-[#1c1c1c]/40 to-[#141414]/60 border border-white/5 shadow-xl">
-			<div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-center">
-				<div>
-					<div class="text-4xl font-extrabold text-[#e2e8f0] mb-1">142,840+</div>
-					<div class="text-sm text-[#94a3b8]">Simüle Edilen Arı Popülasyonu</div>
-				</div>
-				<div>
-					<div class="text-4xl font-extrabold text-[#e2e8f0] mb-1">12</div>
-					<div class="text-sm text-[#94a3b8]">Tamamlanan Çevre Projesi</div>
-				</div>
+		<section class="stats-grid">
+			<div>
+				<div class="stat-number">142,840+</div>
+				<div class="stat-label">Simüle Edilen Arı Popülasyonu</div>
+			</div>
+			<div>
+				<div class="stat-number">12</div>
+				<div class="stat-label">Tamamlanan Çevre Projesi</div>
 			</div>
 		</section>
 
 		<!-- Teknolojiler -->
-		<section class="p-6 md:p-8 rounded-2xl bg-gradient-to-b from-[#1c1c1c]/40 to-[#141414]/60 border border-white/5 shadow-xl">
-			<h2 class="text-2xl font-bold text-[#e2e8f0] mb-6">Kullanılan Teknolojiler</h2>
-			<div class="flex flex-wrap gap-2.5">
-				<span class="px-3.5 py-1.5 rounded-full bg-[#1c1c1c] border border-white/5 text-xs text-[#e2e8f0]">Astro</span>
-				<span class="px-3.5 py-1.5 rounded-full bg-[#1c1c1c] border border-white/5 text-xs text-[#e2e8f0]">Tailwind CSS</span>
-				<span class="px-3.5 py-1.5 rounded-full bg-[#1c1c1c] border border-white/5 text-xs text-[#e2e8f0]">HTML5 & CSS3</span>
-				<span class="px-3.5 py-1.5 rounded-full bg-[#1c1c1c] border border-white/5 text-xs text-[#e2e8f0]">JavaScript</span>
-				<span class="px-3.5 py-1.5 rounded-full bg-[#1c1c1c] border border-white/5 text-xs text-[#e2e8f0]">Git</span>
-				<span class="px-3.5 py-1.5 rounded-full bg-[#1c1c1c] border border-white/5 text-xs text-[#e2e8f0]">Yapay Zeka</span>
+		<section>
+			<h2>Kullanılan Teknolojiler</h2>
+			<div class="badges">
+				<span class="badge">Astro</span>
+				<span class="badge">HTML5</span>
+				<span class="badge">CSS3</span>
+				<span class="badge">JavaScript</span>
+				<span class="badge">Git</span>
+				<span class="badge">Yapay Zeka</span>
 			</div>
 		</section>
 
-		<!-- Son Blog Yazıları -->
-		<section class="p-6 md:p-8 rounded-2xl bg-gradient-to-b from-[#1c1c1c]/40 to-[#141414]/60 border border-white/5 shadow-xl">
-			<h2 class="text-2xl font-bold text-[#e2e8f0] mb-6">Son Blog Yazıları</h2>
-			<div class="space-y-6">
-				<div>
-					<h3 class="text-lg font-semibold text-[#e2e8f0] hover:opacity-80 transition-opacity cursor-pointer">Arıların Gizli Mühendisliği</h3>
-					<div class="text-xs text-[#94a3b8] my-1">10 Eylül 2026 • 3 dk okuma</div>
-					<p class="text-sm text-[#94a3b8]">Tek bir bal arısının tüm koloniyi ayakta tutan matematiksel veri akışını nasıl yönettiğini inceliyoruz.</p>
-				</div>
-				<hr class="border-white/5" />
-				<div>
-					<h3 class="text-lg font-semibold text-[#e2e8f0] hover:opacity-80 transition-opacity cursor-pointer">Neden Astro Framework?</h3>
-					<div class="text-xs text-[#94a3b8] my-1">28 Ağustos 2026 • 5 dk okuma</div>
-					<p class="text-sm text-[#94a3b8]">İçerik odaklı doğa projelerinde neden en hızlı ve en hafif framework olan Astro'yu tercih ettim?</p>
-				</div>
+		<!-- Blog -->
+		<section>
+			<h2>Son Blog Yazıları</h2>
+			<div class="blog-item">
+				<h3>Arıların Gizli Mühendisliği</h3>
+				<div class="blog-meta">10 Eylül 2026 • 3 dk okuma</div>
+				<p>Tek bir bal arısının tüm koloniyi ayakta tutan matematiksel veri akışını nasıl yönettiğini inceliyoruz.</p>
+			</div>
+			<div class="blog-item">
+				<h3>Neden Astro Framework?</h3>
+				<div class="blog-meta">28 Ağustos 2026 • 5 dk okuma</div>
+				<p>İçerik odaklı doğa projelerinde neden en hızlı ve en hafif framework olan Astro'yu tercih ettim?</p>
 			</div>
 		</section>
+	</div>
 
-	</main>
-
-	<!-- 3. FOOTER ALANI -->
-	<footer class="w-full bg-[#0d0d0d] border-t border-white/5 py-10 mt-auto">
-		<div class="max-w-4xl mx-auto px-6 flex flex-col items-center justify-center gap-6 text-center">
-			
-			<div class="text-base font-semibold text-[#e2e8f0] tracking-wide">
-				Polinasyon X
+	<!-- Footer -->
+	<footer>
+		<div class="container">
+			<div class="footer-content">
+				<div class="footer-brand">Polinasyon x</div>
+				<div class="social-links">
+					<!-- X / Twitter SVG -->
+					<a href="#" class="social-icon" aria-label="X">
+						<svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+					</a>
+					<!-- GitHub SVG -->
+					<a href="#" class="social-icon" aria-label="GitHub">
+						<svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+					</a>
+					<!-- LinkedIn SVG -->
+					<a href="#" class="social-icon" aria-label="LinkedIn">
+						<svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+					</a>
+				</div>
+				<div class="footer-copy">Tüm hakları saklıdır © 2026</div>
 			</div>
-
-			<!-- Sosyal Medya İkonları -->
-			<div class="flex items-center gap-5">
-				<!-- X / Twitter -->
-				<a href="#" class="text-[#94a3b8] hover:text-[#e2e8f0] hover:-translate-y-0.5 transition-all" aria-label="X">
-					<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-				</a>
-				<!-- Instagram -->
-				<a href="#" class="text-[#94a3b8] hover:text-[#e2e8f0] hover:-translate-y-0.5 transition-all" aria-label="Instagram">
-					<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-				</a>
-				<!-- YouTube -->
-				<a href="#" class="text-[#94a3b8] hover:text-[#e2e8f0] hover:-translate-y-0.5 transition-all" aria-label="YouTube">
-					<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-				</a>
-				<!-- Facebook -->
-				<a href="#" class="text-[#94a3b8] hover:text-[#e2e8f0] hover:-translate-y-0.5 transition-all" aria-label="Facebook">
-					<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-				</a>
-				<!-- GitHub -->
-				<a href="#" class="text-[#94a3b8] hover:text-[#e2e8f0] hover:-translate-y-0.5 transition-all" aria-label="GitHub">
-					<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-				</a>
-				<!-- LinkedIn -->
-				<a href="#" class="text-[#94a3b8] hover:text-[#e2e8f0] hover:-translate-y-0.5 transition-all" aria-label="LinkedIn">
-					<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-				</a>
-			</div>
-
-			<div class="text-xs text-[#94a3b8]">
-				Tüm hakları saklıdır © 2026
-			</div>
-
 		</div>
 	</footer>
-
-	<!-- Interactive Scripts -->
-	<script>
-		const searchToggle = document.getElementById('search-toggle');
-		const searchBox = document.getElementById('search-box');
-
-		searchToggle?.addEventListener('click', () => {
-			searchBox?.classList.toggle('hidden');
-			if (!searchBox?.classList.contains('hidden')) {
-				const input = searchBox?.querySelector('input');
-				input?.focus();
-			}
-		});
-	</script>
 </body>
 </html>
