@@ -158,61 +158,72 @@
 			stroke-linejoin: round;
 		}
 
-		/* Sol Dropdown Menü Stilleri */
-		.dropdown {
-			position: relative;
-		}
+	/* Sol Dropdown Menü Stilleri */
+.dropdown {
+    position: relative;
+}
 
-		.dropdown-menu {
-			position: absolute;
-			top: calc(100% + 12px);
-			left: 0;
-			width: 200px;
-			background: var(--bg-surface);
-			border: 1px solid var(--border-subtle);
-			border-radius: 12px;
-			padding: 0.5rem;
-			box-shadow: 0 15px 35px -5px rgba(0,0,0,0.9), 0 8px 20px -4px var(--amber-glow);
-			opacity: 0;
-			visibility: hidden;
-			transform: translateY(-8px);
-			transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-			z-index: 1001;
-		}
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 16px);
+    left: 0;
+    width: 240px; /* Görseldeki gibi daha geniş */
+    background: #18181b; /* Görseldeki koyu gri/siyah ton */
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px; /* Daha yumuşak köşeler */
+    padding: 0.75rem; /* Dış çerçeve iç boşluğu */
+    box-shadow: 0 20px 40px -5px rgba(0,0,0,0.9), 0 8px 20px -4px rgba(245, 158, 11, 0.1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1001;
+}
 
-		.dropdown.open .dropdown-menu {
-			opacity: 1;
-			visibility: visible;
-			transform: translateY(0);
-		}
+.dropdown.open .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
 
-		.dropdown-item {
-			display: flex;
-			align-items: center;
-			gap: 10px; /* SVG ve Yazı arası boşluk */
-			color: var(--text-main);
-			text-decoration: none;
-			padding: 0.6rem 0.8rem;
-			font-size: 0.9rem;
-			border-radius: 6px;
-			font-weight: 500;
-			transition: all 0.2s ease;
-		}
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 16px; /* SVG ve Yazı arası boşluk görseldeki gibi arttırıldı */
+    color: var(--text-main);
+    text-decoration: none;
+    padding: 0.9rem 1rem; /* Satırlar arası ferahlık eklendi */
+    font-size: 1.05rem; /* Görseldeki gibi biraz daha büyük okunaklı font */
+    border-radius: 10px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
 
-		.dropdown-item:hover {
-			background: rgba(245, 158, 11, 0.12);
-			color: var(--amber);
-			padding-left: 1rem;
-		}
-		
-		.dropdown-item.astro-item {
-			color: var(--amber);
-		}
-		
-		.dropdown-item.astro-item:hover {
-			background: rgba(245, 158, 11, 0.15);
-			color: #fff;
-		}
+.dropdown-item svg {
+    width: 22px;
+    height: 22px;
+    stroke: #e2e8f0; /* Standart ikon rengi */
+    opacity: 0.9;
+}
+
+.dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Astro Şablonu (Sarı/Kehribar) Öğesi */
+.dropdown-item.astro-item {
+    color: var(--amber);
+}
+
+.dropdown-item.astro-item svg {
+    stroke: var(--amber); /* Astro öğesinin ikon rengi */
+    opacity: 1;
+}
+
+.dropdown-item.astro-item:hover {
+    background: rgba(245, 158, 11, 0.1);
+}
+
 
 		/* Arama Paneli */
 		.search-panel {
