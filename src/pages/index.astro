@@ -1,6 +1,5 @@
 ---
-// Astro Ön Yüz (Frontmatter) Alanı
-// İleride buraya veri çekme (fetch), markdown yükleme vb. mantıklar gelecek.
+// Astro Ön Yüz (Frontmatter) Area
 ---
 
 <!DOCTYPE html>
@@ -29,7 +28,7 @@
 		}
 
 		html {
-			scroll-behavior: smooth; /* Yağ gibi kayan yukarı çıkış efekti */
+			scroll-behavior: smooth;
 		}
 
 		body {
@@ -65,6 +64,14 @@
 			height: 70px;
 		}
 
+		/* Header Sol Taraf (Dropdown Menü) */
+		.header-left {
+			grid-column: 1;
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+		}
+
 		.logo {
 			grid-column: 2;
 			font-size: 1.35rem;
@@ -89,13 +96,12 @@
 			transform: scale(1.08);
 		}
 
-		/* Header Sağ Taraf (Arama & Dropdown) */
+		/* Header Sağ Taraf (Arama) */
 		.header-right {
 			grid-column: 3;
 			display: flex;
 			justify-content: flex-end;
 			align-items: center;
-			gap: 0.75rem;
 		}
 
 		.search-btn {
@@ -126,29 +132,26 @@
 			stroke-linejoin: round;
 		}
 
-		/* Dropdown Menü Stilleri */
+		/* Sol Dropdown Menü Stilleri */
 		.dropdown {
 			position: relative;
 		}
 
 		.dropdown-trigger {
-			background: rgba(255, 255, 255, 0.03);
-			border: 1px solid var(--border-subtle);
+			background: transparent;
+			border: none;
 			color: var(--text-main);
-			padding: 0.45rem 0.85rem;
+			padding: 0.5rem;
 			border-radius: 8px;
 			cursor: pointer;
 			display: flex;
 			align-items: center;
-			gap: 0.4rem;
-			font-size: 0.88rem;
-			font-weight: 600;
+			justify-content: center;
 			transition: all 0.3s ease;
 		}
 
 		.dropdown-trigger:hover,
 		.dropdown:hover .dropdown-trigger {
-			border-color: rgba(245, 158, 11, 0.4);
 			background: rgba(255, 255, 255, 0.08);
 			color: var(--amber);
 		}
@@ -156,8 +159,8 @@
 		.dropdown-menu {
 			position: absolute;
 			top: calc(100% + 12px);
-			right: 0;
-			width: 200px;
+			left: 0; /* Sol hizada açılsın */
+			width: 190px;
 			background: var(--bg-surface);
 			border: 1px solid var(--border-subtle);
 			border-radius: 12px;
@@ -453,7 +456,7 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			text-decoration: none;
+			cursor: pointer;
 			box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.8), 0 0 15px var(--amber-glow);
 			opacity: 0;
 			visibility: hidden;
@@ -528,27 +531,15 @@
 	<header id="top">
 		<div class="container">
 			<div class="header-inner">
-				<div></div>
-				<a href="#" class="logo">
-					<div class="logo-icon">
-						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="30" height="30">
-							<path fill="#e2e8f0" stroke="#0d0d0d" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M5.63 24l4.696-8.137h9.397L24.42 24l-4.698 8.137h-9.397z" />
-							<path fill="#f59e0b" stroke="#0d0d0d" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M23.58 13.637L28.274 5.5h9.397l4.698 8.137l-4.698 8.137h-9.397z" />
-							<path fill="#f59e0b" stroke="#0d0d0d" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M23.58 34.363l4.695-8.137h9.397l4.698 8.137l-4.698 8.137h-9.397z" />
-						</svg>
-					</div>
-					<span>Polinasyon</span>
-				</a>
-				<div class="header-right">
-					<button class="search-btn" id="searchToggle" aria-label="Arama Yap">
-						<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-					</button>
-
-					<!-- Sağ Dropdown Menü -->
+				<!-- Sol Dropdown Menü (3 Çizgili SVG İkonlu) -->
+				<div class="header-left">
 					<div class="dropdown">
 						<button class="dropdown-trigger" aria-label="Menüyü Aç">
-							<span>Menü</span>
-							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+								<line x1="3" y1="6" x2="21" y2="6"></line>
+								<line x1="3" y1="12" x2="21" y2="12"></line>
+								<line x1="3" y1="18" x2="21" y2="18"></line>
+							</svg>
 						</button>
 						<div class="dropdown-menu">
 							<a href="#top" class="dropdown-item">Ana Sayfa</a>
@@ -559,8 +550,28 @@
 						</div>
 					</div>
 				</div>
+
+				<!-- Logo -->
+				<a href="#" class="logo">
+					<div class="logo-icon">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="30" height="30">
+							<path fill="#e2e8f0" stroke="#0d0d0d" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M5.63 24l4.696-8.137h9.397L24.42 24l-4.698 8.137h-9.397z" />
+							<path fill="#f59e0b" stroke="#0d0d0d" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M23.58 13.637L28.274 5.5h9.397l4.698 8.137l-4.698 8.137h-9.397z" />
+							<path fill="#f59e0b" stroke="#0d0d0d" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M23.58 34.363l4.695-8.137h9.397l4.698 8.137l-4.698 8.137h-9.397z" />
+						</svg>
+					</div>
+					<span>Polinasyon</span>
+				</a>
+
+				<!-- Sağ Arama Butonu -->
+				<div class="header-right">
+					<button class="search-btn" id="searchToggle" aria-label="Arama Yap">
+						<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+					</button>
+				</div>
 			</div>
 		</div>
+
 		<!-- Açılır Arama Paneli -->
 		<div class="search-panel" id="searchPanel">
 			<div class="container">
@@ -680,11 +691,11 @@
 	</footer>
 
 	<!-- Back to Top (Yukarı Dön) Butonu -->
-	<a href="#top" class="back-to-top" id="backToTop" aria-label="Yukarı Çık">
+	<button class="back-to-top" id="backToTop" aria-label="Yukarı Çık">
 		<svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
-	</a>
+	</button>
 
-	<!-- İstemci Tarafı Küçük JS (Arama & Back to Top) -->
+	<!-- İstemci Tarafı JS -->
 	<script>
 		// Arama Paneli Toggle
 		const searchToggle = document.getElementById('searchToggle');
@@ -698,14 +709,22 @@
 			}
 		});
 
-		// Back To Top Buton Kontrolü (300px aşağı kayınca belirir)
+		// Back To Top Görünürlük Kontrolü
 		const backToTopBtn = document.getElementById('backToTop');
 		window.addEventListener('scroll', () => {
-			if (window.scrollY > 300) {
+			if (window.scrollY > 250) {
 				backToTopBtn?.classList.add('visible');
 			} else {
 				backToTopBtn?.classList.remove('visible');
 			}
+		});
+
+		// Back To Top Tıklama Aksiyonu (Kesin ve Akıcı Kaydırma)
+		backToTopBtn?.addEventListener('click', () => {
+			window.scrollTo({
+				top: 0,
+				behavior: 'smooth'
+			});
 		});
 	</script>
 </body>
