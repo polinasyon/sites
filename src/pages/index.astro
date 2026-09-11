@@ -1,205 +1,316 @@
----
-// src/pages/index.astro
----
+<!DOCTYPE html>
 <html lang="tr">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<title>Doğanın Teknolojisi: Polinasyon & Yazılım</title>
-		<style>
-			/* Mat Koyu Kahve Renk Paleti */
-			:root {
-				--bg-dark: #1e1915;        /* Mat Zengin Espresso Kahve */
-				--bg-card: #27211c;        /* Sıcak Koyu Çikolata */
-				--text-main: #e8ded4;      /* Yumuşak Krem / Fildişi */
-				--text-muted: #a39587;     /* Mat Sütlü Kahve / Gri-Kahve */
-				--accent-gold: #e5a93c;    /* Mat Ilık Altın Amber */
-				--accent-border: rgba(229, 169, 60, 0.15);
-			}
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Doğanın Teknolojisi: Polinasyon & Yazılım</title>
+	<style>
+		/* Renk Paleti ve Değişkenler */
+		:root {
+			--bg-black: #0d0d0d;         /* Tam Mat Siyah Zemin */
+			--bg-surface: #1c1c1c;       /* Görseldeki Mat Koyu Gri Yüzey */
+			--text-main: #e2e8f0;        /* Platin / Mat Beyaz */
+			--text-muted: #94a3b8;       /* Mat Dumanlı Gri */
+			--accent-gold: #f59e0b;      /* Kehribar / Sıcak Altın */
+			--accent-border: rgba(245, 158, 11, 0.15);
+		}
 
-			body {
-				background-color: var(--bg-dark);
-				color: var(--text-main);
-				font-family: system-ui, -apple-system, sans-serif;
-				margin: 0;
-				padding: 0;
-			}
-			.container {
-				max-width: 1000px;
-				margin: 0 auto;
-				padding: 0 2rem;
-			}
-			/* Sabit Amber Buton */
-			.fixed-btn {
-				position: fixed;
-				top: 1.5rem;
-				left: 1.5rem;
-				background: rgba(30, 25, 21, 0.85);
-				border: 1px solid var(--accent-border);
-				padding: 0.6rem 1.2rem;
-				border-radius: 8px;
-				color: var(--accent-gold);
-				text-decoration: none;
-				font-size: 0.9rem;
-				font-weight: 500;
-				backdrop-filter: blur(12px);
-				transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-				z-index: 100;
-			}
-			.fixed-btn:hover {
-				border-color: var(--accent-gold);
-				box-shadow: 0 0 15px rgba(229, 169, 60, 0.15);
-				transform: translateY(-2px);
-			}
-			/* Bölüm Ortak Ayarı */
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			background-color: var(--bg-black);
+			color: var(--text-main);
+			font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+			line-height: 1.6;
+		}
+
+		.container {
+			max-width: 1000px;
+			margin: 0 auto;
+			padding: 0 1.5rem;
+		}
+
+		/* Sabit Buton */
+		.fixed-btn {
+			position: fixed;
+			top: 1.25rem;
+			left: 1.25rem;
+			background: rgba(28, 28, 28, 0.8);
+			border: 1px solid var(--accent-border);
+			padding: 0.6rem 1.2rem;
+			border-radius: 8px;
+			color: var(--accent-gold);
+			text-decoration: none;
+			font-size: 0.875rem;
+			font-weight: 500;
+			backdrop-filter: blur(12px);
+			-webkit-backdrop-filter: blur(12px);
+			transition: all 0.3s ease;
+			z-index: 100;
+		}
+
+		.fixed-btn:hover {
+			border-color: var(--accent-gold);
+			box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+			transform: translateY(-2px);
+		}
+
+		/* Bölüm Ortak Ayarı */
+		section {
+			padding: 5rem 0;
+			border-bottom: 1px solid var(--accent-border);
+		}
+
+		h2 {
+			color: var(--accent-gold);
+			font-size: 1.75rem;
+			margin-bottom: 1.5rem;
+		}
+
+		/* Hero Alanı */
+		.hero {
+			text-align: center;
+			padding-top: 7rem;
+		}
+
+		.gradient-text {
+			background: linear-gradient(135deg, #fbbf24, #d97706);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			font-weight: 800;
+		}
+
+		h1 {
+			font-size: 2.75rem;
+			line-height: 1.2;
+			margin-bottom: 1rem;
+			color: var(--accent-gold);
+		}
+
+		.subtitle {
+			font-size: 1.2rem;
+			color: var(--text-main);
+			margin-bottom: 1.25rem;
+		}
+
+		.description {
+			max-width: 600px;
+			margin: 0 auto;
+			color: var(--text-muted);
+		}
+
+		/* Proje Kartları Grid */
+		.grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+			gap: 1.5rem;
+		}
+
+		.card {
+			background: var(--bg-surface);
+			border: 1px solid var(--accent-border);
+			padding: 1.75rem;
+			border-radius: 12px;
+			transition: all 0.3s ease;
+		}
+
+		.card:hover {
+			transform: translateY(-4px);
+			border-color: var(--accent-gold);
+			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+		}
+
+		.card h3 {
+			color: var(--accent-gold);
+			margin-bottom: 0.75rem;
+		}
+
+		.card p {
+			color: var(--text-muted);
+			font-size: 0.95rem;
+		}
+
+		/* Sayaçlar */
+		.stats-grid {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			text-align: center;
+			gap: 2rem;
+		}
+
+		.stat-number {
+			font-size: 3rem;
+			font-weight: 800;
+			color: var(--accent-gold);
+			margin-bottom: 0.25rem;
+		}
+
+		.stat-label {
+			color: var(--text-muted);
+			font-size: 0.95rem;
+		}
+
+		/* Rozetler */
+		.badges {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0.6rem;
+		}
+
+		.badge {
+			background: var(--bg-surface);
+			border: 1px solid var(--accent-border);
+			padding: 0.4rem 0.9rem;
+			border-radius: 20px;
+			font-size: 0.85rem;
+			color: var(--accent-gold);
+			transition: all 0.3s ease;
+		}
+
+		.badge:hover {
+			border-color: var(--accent-gold);
+			background: rgba(245, 158, 11, 0.1);
+		}
+
+		/* Blog */
+		.blog-item {
+			margin-bottom: 2rem;
+		}
+
+		.blog-item:last-child {
+			margin-bottom: 0;
+		}
+
+		.blog-item h3 {
+			color: var(--text-main);
+			margin-bottom: 0.4rem;
+			transition: color 0.3s ease;
+			cursor: pointer;
+		}
+
+		.blog-item h3:hover {
+			color: var(--accent-gold);
+		}
+
+		.blog-meta {
+			color: var(--text-muted);
+			font-size: 0.85rem;
+			margin-bottom: 0.5rem;
+		}
+
+		.blog-item p {
+			color: var(--text-muted);
+		}
+
+		/* Mobile / Responsive Breakpoints */
+		@media (max-width: 768px) {
 			section {
-				padding: 6rem 0;
-				border-bottom: 1px solid var(--accent-border);
+				padding: 3.5rem 0;
 			}
-			/* Hero Alanı */
+
 			.hero {
-				text-align: center;
-				padding-top: 8rem;
+				padding-top: 6rem;
 			}
-			.gradient-text {
-				background: linear-gradient(135deg, #f3ca7e, #e5a93c);
-				-webkit-background-clip: text;
-				-webkit-text-fill-color: transparent;
-				font-weight: 800;
-			}
-			h1 { font-size: 3rem; margin-bottom: 1rem; color: var(--accent-gold); }
-			.subtitle { font-size: 1.3rem; color: var(--text-main); margin-bottom: 1.5rem; }
-			.description { max-width: 600px; margin: 0 auto; color: var(--text-muted); line-height: 1.6; }
-			
-			/* Bento / Proje Kartları */
-			.grid {
-				display: grid;
-				grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-				gap: 1.5rem;
-				margin-top: 2rem;
-			}
-			.card {
-				background: var(--bg-card);
-				border: 1px solid var(--accent-border);
-				padding: 2rem;
-				border-radius: 12px;
-				transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-			}
-			.card:hover {
-				transform: translateY(-4px);
-				border-color: var(--accent-gold);
-				box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-			}
-			.card h3 { color: var(--accent-gold); margin-top: 0; }
-			.card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; }
 
-			/* Sayaçlar */
+			h1 {
+				font-size: 2.1rem;
+			}
+
+			.subtitle {
+				font-size: 1.05rem;
+			}
+
+			.fixed-btn {
+				position: static;
+				display: inline-block;
+				margin: 1.5rem 0 0 1.5rem;
+			}
+
 			.stats-grid {
-				display: grid;
-				grid-template-columns: 1fr 1fr;
-				text-align: center;
-				gap: 2rem;
+				grid-template-columns: 1fr;
+				gap: 1.5rem;
 			}
-			.stat-number { font-size: 3.5rem; font-weight: 800; color: var(--accent-gold); margin-bottom: 0.5rem; }
-			.stat-label { color: var(--text-muted); font-size: 1rem; }
 
-			/* Blog */
-			.blog-item {
-				margin-bottom: 2.5rem;
+			.stat-number {
+				font-size: 2.5rem;
 			}
-			.blog-item h3 { color: var(--text-main); margin-bottom: 0.5rem; transition: color 0.3s; cursor: pointer; }
-			.blog-item h3:hover { color: var(--accent-gold); }
-			.blog-meta { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem; }
-			.blog-item p { color: var(--text-muted); line-height: 1.5; }
+		}
+	</style>
+</head>
+<body>
+	<!-- Sabit Buton -->
+	<a href="#" class="fixed-btn">Ana Sayfa Premium</a>
 
-			/* Rozetler */
-			.badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
-			.badge {
-				background: var(--bg-card);
-				border: 1px solid var(--accent-border);
-				padding: 0.3rem 0.8rem;
-				border-radius: 20px;
-				font-size: 0.85rem;
-				color: var(--accent-gold);
-				transition: all 0.3s;
-			}
-			.badge:hover { 
-				border-color: var(--accent-gold);
-				background: rgba(229, 169, 60, 0.1); 
-			}
-		</style>
-	</head>
-	<body>
-		<!-- Sabit Buton -->
-		<a href="#" class="fixed-btn">Ana Sayfa Premium</a>
+	<div class="container">
+		<!-- Hero Bölümü -->
+		<section class="hero">
+			<h1>Doğanın Teknolojisi:<br/><span class="gradient-text">Polinasyon & Yazılım</span></h1>
+			<p class="subtitle">Ekosistemlerin geleceğini kodluyor, arıların izinde dijital çözümler üretiyorum.</p>
+			<p class="description">Ben bir doğa araştırmacısı ve web geliştiricisiyim. Biyoçeşitliliğin korunması için teknolojinin gücünü kullanıyor, sürdürülebilir bir gelecek inşa ediyorum.</p>
+		</section>
 
-		<div class="container">
-			<!-- Hero Bölümü -->
-			<section class="hero">
-				<h1>Doğanın Teknolojisi:<br/><span class="gradient-text">Polinasyon & Yazılım</span></h1>
-				<p class="subtitle">Ekosistemlerin geleceğini kodluyor, arıların izinde dijital çözümler üretiyorum.</p>
-				<p class="description">Ben bir doğa araştırmacısı ve web geliştiricisiyim. Biyoçeşitliliğin korunması için teknolojinin gücünü kullanıyor, sürdürülebilir bir gelecek inşa ediyorum.</p>
-			</section>
+		<!-- Projeler -->
+		<section>
+			<h2>Öne Çıkan Projeler</h2>
+			<div class="grid">
+				<div class="card">
+					<h3>BeeTrack - Kovan Takip</h3>
+					<p>Nesnelerin İnterneti (IoT) tabanlı, arı kovanlarının sıcaklık ve nem dengesini anlık izleyen mobil uygulama.</p>
+				</div>
+				<div class="card">
+					<h3>PolenAtlas</h3>
+					<p>Yapay zeka algoritmaları kullanarak bitki türlerini ve polen yayılım haritalarını çıkaran web platformu.</p>
+				</div>
+				<div class="card">
+					<h3>EkoSimülatör</h3>
+					<p>Arı popülasyonunun tarımsal üretime etkisini simüle eden interaktif analiz aracı.</p>
+				</div>
+			</div>
+		</section>
 
-			<!-- Projeler -->
-			<section>
-				<h2>Öne Çıkan Projeler</h2>
-				<div class="grid">
-					<div class="card">
-						<h3>BeeTrack - Kovan Takip</h3>
-						<p>Nesnelerin İnterneti (IoT) tabanlı, arı kovanlarının sıcaklık ve nem dengesini anlık izleyen mobil uygulama.</p>
-					</div>
-					<div class="card">
-						<h3>PolenAtlas</h3>
-						<p>Yapay zeka algoritmaları kullanarak bitki türlerini ve polen yayılım haritalarını çıkaran web platformu.</p>
-					</div>
-					<div class="card">
-						<h3>EkoSimülatör</h3>
-						<p>Arı popülasyonunun tarımsal üretime etkisini simüle eden interaktif analiz aracı.</p>
-					</div>
-				</div>
-			</section>
+		<!-- Sayaçlar -->
+		<section class="stats-grid">
+			<div>
+				<div class="stat-number">142,840+</div>
+				<div class="stat-label">Simüle Edilen Arı Popülasyonu</div>
+			</div>
+			<div>
+				<div class="stat-number">12</div>
+				<div class="stat-label">Tamamlanan Çevre Projesi</div>
+			</div>
+		</section>
 
-			<!-- Sayaçlar -->
-			<section class="stats-grid">
-				<div>
-					<div class="stat-number">142,840+</div>
-					<div class="stat-label">Simüle Edilen Arı Popülasyonu</div>
-				</div>
-				<div>
-					<div class="stat-number">12</div>
-					<div class="stat-label">Tamamlanan Çevre Projesi</div>
-				</div>
-			</section>
+		<!-- Teknolojiler -->
+		<section>
+			<h2>Kullanılan Teknolojiler</h2>
+			<div class="badges">
+				<span class="badge">Astro</span>
+				<span class="badge">HTML5</span>
+				<span class="badge">CSS3</span>
+				<span class="badge">JavaScript</span>
+				<span class="badge">Git</span>
+				<span class="badge">Yapay Zeka</span>
+			</div>
+		</section>
 
-			<!-- Teknolojiler -->
-			<section>
-				<h2>Kullanılan Teknolojiler</h2>
-				<div class="badges">
-					<span class="badge">Astro v7</span>
-					<span class="badge">HTML5</span>
-					<span class="badge">CSS3</span>
-					<span class="badge">JavaScript</span>
-					<span class="badge">Git</span>
-					<span class="badge">Yapay Zeka</span>
-				</div>
-			</section>
-
-			<!-- Blog -->
-			<section>
-				<h2>Son Blog Yazıları</h2>
-				<div class="blog-item">
-					<h3>Arıların Gizli Mühendisliği</h3>
-					<div class="blog-meta">10 Eylül 2026 • 3 dk okuma</div>
-					<p>Tek bir bal arısının tüm koloniyi ayakta tutan matematiksel veri akışını nasıl yönettiğini inceliyoruz.</p>
-				</div>
-				<div class="blog-item">
-					<h3>Neden Astro Framework?</h3>
-					<div class="blog-meta">28 Ağustos 2026 • 5 dk okuma</div>
-					<p>İçerik odaklı doğa projelerinde neden en hızlı ve en hafif framework olan Astro'yu tercih ettim?</p>
-				</div>
-			</section>
-		</div>
-	</body>
+		<!-- Blog -->
+		<section>
+			<h2>Son Blog Yazıları</h2>
+			<div class="blog-item">
+				<h3>Arıların Gizli Mühendisliği</h3>
+				<div class="blog-meta">10 Eylül 2026 • 3 dk okuma</div>
+				<p>Tek bir bal arısının tüm koloniyi ayakta tutan matematiksel veri akışını nasıl yönettiğini inceliyoruz.</p>
+			</div>
+			<div class="blog-item">
+				<h3>Neden Astro Framework?</h3>
+				<div class="blog-meta">28 Ağustos 2026 • 5 dk okuma</div>
+				<p>İçerik odaklı doğa projelerinde neden en hızlı ve en hafif framework olan Astro'yu tercih ettim?</p>
+			</div>
+		</section>
+	</div>
+</body>
 </html>
