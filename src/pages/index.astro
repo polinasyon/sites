@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Kanatların Matematiği</title>
+	<title>Doğanın Teknolojisi: Polinasyon & Yazılım</title>
 	<style>
 		/* Renk Paleti ve Değişkenler */
 		:root {
@@ -12,6 +12,7 @@
 			--text-main: #e2e8f0;        /* Platin / Mat Açık Gri */
 			--text-muted: #94a3b8;       /* Mat Dumanlı Gri */
 			--amber: #f59e0b;            /* Kehribar (Amber) Renk */
+			--amber-glow: rgba(245, 158, 11, 0.45); /* Net Alt Işık Efekti */
 			--border-subtle: rgba(255, 255, 255, 0.08);
 			--surface-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05), 0 10px 30px -10px rgba(0, 0, 0, 0.8);
 		}
@@ -199,22 +200,26 @@
 		.grid {
 			display: grid;
 			grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-			gap: 1.5rem;
+			gap: 1.75rem;
 		}
 
+		/* Yenilenen Amber Alt Işık Efektli Kart Yapısı */
 		.card {
+			position: relative;
 			background: var(--bg-surface);
 			border: 1px solid var(--border-subtle);
 			padding: 1.75rem;
 			border-radius: 12px;
-			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 8px 15px -6px rgba(245, 158, 11, 0.15);
-			transition: all 0.3s ease;
+			/* Alt kenardan sızan ince amber glow */
+			box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.8), 0 12px 20px -6px var(--amber-glow);
+			transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 		}
 
 		.card:hover {
-			transform: translateY(-4px);
-			border-color: rgba(245, 158, 11, 0.3);
-			box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7), 0 12px 25px -4px rgba(245, 158, 11, 0.3);
+			transform: translateY(-5px);
+			border-color: rgba(245, 158, 11, 0.4);
+			/* Hover halinde parlayan katmanlı amber ışık */
+			box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.9), 0 18px 28px -4px rgba(245, 158, 11, 0.65);
 		}
 
 		.card h3 {
@@ -403,9 +408,12 @@
 							width="30" 
 							height="30"
 						>
+							<!-- Sol Arka Parça (Platin / Açık Gri) -->
 							<path fill="#e2e8f0" stroke="#0d0d0d" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M5.63 24l4.696-8.137h9.397L24.42 24l-4.698 8.137h-9.397z" />
-							<path fill="#94a3b8" stroke="#0d0d0d" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M23.58 13.637L28.274 5.5h9.397l4.698 8.137l-4.698 8.137h-9.397z" />
-							<path fill="#94a3b8" stroke="#0d0d0d" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M23.58 34.363l4.695-8.137h9.397l4.698 8.137l-4.698 8.137h-9.397z" />
+							<!-- Öndeki Üst Parça (Amber / Kehribar) -->
+							<path fill="#f59e0b" stroke="#0d0d0d" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M23.58 13.637L28.274 5.5h9.397l4.698 8.137l-4.698 8.137h-9.397z" />
+							<!-- Öndeki Alt Parça (Amber / Kehribar) -->
+							<path fill="#f59e0b" stroke="#0d0d0d" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" d="M23.58 34.363l4.695-8.137h9.397l4.698 8.137l-4.698 8.137h-9.397z" />
 						</svg>
 					</div>
 					<span>Polinasyon</span>
