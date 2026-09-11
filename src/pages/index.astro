@@ -151,7 +151,7 @@
 		}
 
 		.dropdown-trigger:hover,
-		.dropdown:hover .dropdown-trigger {
+		.dropdown.open .dropdown-trigger {
 			background: rgba(255, 255, 255, 0.08);
 			color: var(--amber);
 		}
@@ -159,7 +159,7 @@
 		.dropdown-menu {
 			position: absolute;
 			top: calc(100% + 12px);
-			left: 0; /* Sol hizada açılsın */
+			left: 0;
 			width: 190px;
 			background: var(--bg-surface);
 			border: 1px solid var(--border-subtle);
@@ -173,8 +173,8 @@
 			z-index: 1001;
 		}
 
-		/* Menü Hover Açılışı */
-		.dropdown:hover .dropdown-menu {
+		/* Menü Açık Durumu */
+		.dropdown.open .dropdown-menu {
 			opacity: 1;
 			visibility: visible;
 			transform: translateY(0);
@@ -531,10 +531,10 @@
 	<header id="top">
 		<div class="container">
 			<div class="header-inner">
-				<!-- Sol Dropdown Menü (3 Çizgili SVG İkonlu) -->
+				<!-- Sol Dropdown Menü -->
 				<div class="header-left">
-					<div class="dropdown">
-						<button class="dropdown-trigger" aria-label="Menüyü Aç">
+					<div class="dropdown" id="dropdown">
+						<button class="dropdown-trigger" id="dropdownTrigger" aria-label="Menüyü Aç">
 							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
 								<line x1="3" y1="6" x2="21" y2="6"></line>
 								<line x1="3" y1="12" x2="21" y2="12"></line>
@@ -697,6 +697,30 @@
 
 	<!-- İstemci Tarafı JS -->
 	<script>
+		// Dropdown Menü Kontrolü (Tıklama ile Aç/Kapa)
+		const dropdown = document.getElementById('dropdown');
+		const dropdownTrigger = document.getElementById('dropdownTrigger');
+		const dropdownItems = document.querySelectorAll('.dropdown-item');
+
+		dropdownTrigger?.addEventListener('click', (e) => {
+			e.stopPropagation();
+			dropdown?.classList.toggle('open');
+		});
+
+		// Menü dışına tıklandığında menüyü kapat
+		document.addEventListener('click', (e) => {
+			if (dropdown && !dropdown.contains(e.target as Node)) {
+				dropdown.classList.remove('open');
+			}
+		});
+
+		// Menü öğesine tıklandığında menüyü kapat
+		dropdownItems.forEach((item) => {
+			item.addEventListener('click', () => {
+				dropdown?.classList.remove('open');
+			});
+		});
+
 		// Arama Paneli Toggle
 		const searchToggle = document.getElementById('searchToggle');
 		const searchPanel = document.getElementById('searchPanel');
@@ -719,7 +743,7 @@
 			}
 		});
 
-		// Back To Top Tıklama Aksiyonu (Kesin ve Akıcı Kaydırma)
+		// Back To Top Tıklama Aksiyonu
 		backToTopBtn?.addEventListener('click', () => {
 			window.scrollTo({
 				top: 0,
