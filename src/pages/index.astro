@@ -157,48 +157,74 @@
 		.dropdown {
 			position: relative;
 		}
+/* Güncellenmiş Dropdown Menü ve Buton Derinlik Stilleri */
+.dropdown-menu {
+	position: absolute;
+	top: calc(100% + 12px);
+	left: 0;
+	width: 200px;
+	background: #181818;
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	border-radius: 14px;
+	padding: 0.6rem;
+	box-shadow: 
+		0 20px 40px -10px rgba(0, 0, 0, 0.95), 
+		0 0 20px -5px var(--amber-glow);
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(-8px);
+	transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+	z-index: 1001;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem; /* Butonlar arası mesafe */
+}
 
-		.dropdown-menu {
-			position: absolute;
-			top: calc(100% + 12px);
-			left: 0;
-			width: 190px;
-			background: var(--bg-surface);
-			border: 1px solid var(--border-subtle);
-			border-radius: 12px;
-			padding: 0.5rem;
-			box-shadow: 0 15px 35px -5px rgba(0,0,0,0.9), 0 8px 20px -4px var(--amber-glow);
-			opacity: 0;
-			visibility: hidden;
-			transform: translateY(-8px);
-			transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-			z-index: 1001;
-		}
+.dropdown.open .dropdown-menu {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
+}
 
-		.dropdown.open .dropdown-menu {
-			opacity: 1;
-			visibility: visible;
-			transform: translateY(0);
-		}
+.dropdown-item {
+	display: flex;
+	align-items: center;
+	color: var(--text-main);
+	text-decoration: none;
+	padding: 0.65rem 1rem;
+	font-size: 0.9rem;
+	font-weight: 600;
+	border-radius: 8px;
+	background: linear-gradient(180deg, #262626 0%, #1a1a1a 100%);
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	box-shadow: 
+		inset 0 1px 0 0 rgba(255, 255, 255, 0.12),
+		0 3px 6px rgba(0, 0, 0, 0.4);
+	transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-		.dropdown-item {
-			display: flex;
-			align-items: center;
-			color: var(--text-main);
-			text-decoration: none;
-			padding: 0.6rem 0.8rem;
-			font-size: 0.9rem;
-			border-radius: 6px;
-			font-weight: 500;
-			transition: all 0.2s ease;
-		}
+/* Hover (Üzerine Gelince) Derinliği */
+.dropdown-item:hover {
+	background: linear-gradient(180deg, #303030 0%, #202020 100%);
+	color: var(--amber);
+	border-color: rgba(245, 158, 11, 0.35);
+	padding-left: 1.15rem;
+	transform: translateY(-1px);
+	box-shadow: 
+		inset 0 1px 0 0 rgba(255, 255, 255, 0.2),
+		0 5px 12px -2px rgba(0, 0, 0, 0.6),
+		0 0 10px -2px var(--amber-glow);
+}
 
-		.dropdown-item:hover {
-			background: rgba(245, 158, 11, 0.12);
-			color: var(--amber);
-			padding-left: 1rem;
-		}
+/* Active (Tıklanınca) Basılma Hissi */
+.dropdown-item:active {
+	transform: translateY(1px);
+	box-shadow: 
+		inset 0 2px 4px rgba(0, 0, 0, 0.6),
+		0 1px 2px rgba(0, 0, 0, 0.3);
+}
 
+		
 		/* Arama Paneli */
 		.search-panel {
 			max-height: 0;
