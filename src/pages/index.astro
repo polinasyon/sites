@@ -15,9 +15,9 @@
       --text: #e6ebe8;
       --muted: #8b9a91;
       --accent: #c9a227;
-      --accent-soft: rgba(201, 162, 39, 0.12);
       --border: rgba(255, 255, 255, 0.06);
       --radius: 12px;
+      --shadow: 0 4px 20px -6px rgba(0, 0, 0, 0.45);
     }
 
     * {
@@ -76,12 +76,6 @@
       height: 24px;
     }
 
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
     .icon-btn {
       width: 38px;
       height: 38px;
@@ -126,6 +120,7 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 0.4rem;
+      box-shadow: var(--shadow);
       opacity: 0;
       visibility: hidden;
       transform: translateY(-4px);
@@ -243,6 +238,7 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 1.4rem;
+      box-shadow: var(--shadow);
       transition: border-color 0.2s, transform 0.2s;
     }
 
@@ -269,6 +265,14 @@
       grid-template-columns: repeat(2, 1fr);
       gap: 1.5rem;
       text-align: center;
+    }
+
+    .stat-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem 1rem;
+      box-shadow: var(--shadow);
     }
 
     .stat-num {
@@ -306,14 +310,27 @@
       color: var(--accent);
     }
 
-    /* Blog */
+    /* Blog - alıntı tarzı sol çizgi */
     .blog-item {
-      padding: 1.15rem 0;
+      position: relative;
+      padding: 1.15rem 0 1.15rem 1.1rem;
       border-bottom: 1px solid var(--border);
     }
 
     .blog-item:last-child {
       border-bottom: none;
+    }
+
+    .blog-item::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 1.15rem;
+      bottom: 1.15rem;
+      width: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+      opacity: 0.7;
     }
 
     .blog-item h3 {
@@ -397,6 +414,7 @@
       transform: translateY(6px);
       transition: opacity 0.22s, transform 0.22s, visibility 0.22s, background 0.2s;
       z-index: 90;
+      box-shadow: var(--shadow);
     }
 
     .back-top.visible {
@@ -422,7 +440,7 @@
     @media (max-width: 640px) {
       .stats {
         grid-template-columns: 1fr;
-        gap: 1.25rem;
+        gap: 1.1rem;
       }
       .hero {
         padding: 4.25rem 0 3rem;
@@ -502,11 +520,11 @@
 
       <section>
         <div class="stats">
-          <div>
+          <div class="stat-box">
             <div class="stat-num">142.840+</div>
             <div class="stat-label">Simüle Edilen Arı Popülasyonu</div>
           </div>
-          <div>
+          <div class="stat-box">
             <div class="stat-num">12</div>
             <div class="stat-label">Tamamlanan Çevre Projesi</div>
           </div>
