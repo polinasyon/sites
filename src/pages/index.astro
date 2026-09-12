@@ -17,7 +17,7 @@
       --accent: #c9a227;
       --border: rgba(255, 255, 255, 0.06);
       --radius: 12px;
-      --shadow: 0 4px 20px -6px rgba(0, 0, 0, 0.45);
+      --shadow: 0 4px 18px -6px rgba(0, 0, 0, 0.4);
     }
 
     * {
@@ -141,7 +141,7 @@
       text-decoration: none;
       font-size: 0.93rem;
       border-radius: 8px;
-      transition: background 0.15s, color 0.15s;
+      transition: background 0.15s;
     }
 
     .dropdown-item:hover {
@@ -188,95 +188,98 @@
 
     /* Sections */
     section {
-      padding: 3.25rem 0;
+      padding: 3.5rem 0;
     }
 
     .section-title {
       font-size: 1.4rem;
       font-weight: 700;
-      margin-bottom: 1.35rem;
+      margin-bottom: 1.5rem;
       letter-spacing: -0.2px;
     }
 
-    /* Hero */
+    /* Hero - daha rahat */
     .hero {
       text-align: center;
-      padding: 5.25rem 0 3.75rem;
+      padding: 6rem 0 4.5rem;
     }
 
     .hero h1 {
-      font-size: clamp(1.9rem, 4.8vw, 2.6rem);
+      font-size: clamp(1.95rem, 5vw, 2.7rem);
       font-weight: 800;
-      line-height: 1.2;
-      margin-bottom: 0.7rem;
+      line-height: 1.22;
+      margin-bottom: 0.85rem;
       letter-spacing: -0.4px;
     }
 
     .hero .subtitle {
-      font-size: 1.1rem;
+      font-size: 1.12rem;
       color: var(--accent);
       font-weight: 600;
-      margin-bottom: 0.95rem;
+      margin-bottom: 1.15rem;
     }
 
     .hero .desc {
-      max-width: 480px;
+      max-width: 500px;
       margin: 0 auto;
       color: var(--muted);
-      font-size: 1.02rem;
+      font-size: 1.05rem;
+      line-height: 1.7;
     }
 
     /* Cards */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.1rem;
+      gap: 1.15rem;
     }
 
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 1.4rem;
+      padding: 1.5rem;
       box-shadow: var(--shadow);
-      transition: border-color 0.2s, transform 0.2s;
+      transition: border-color 0.22s, transform 0.22s, box-shadow 0.22s;
     }
 
     .card:hover {
-      border-color: rgba(201, 162, 39, 0.28);
-      transform: translateY(-2px);
+      border-color: rgba(201, 162, 39, 0.32);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.5);
     }
 
     .card h3 {
       color: var(--accent);
-      font-size: 1.05rem;
-      margin-bottom: 0.45rem;
+      font-size: 1.06rem;
+      margin-bottom: 0.5rem;
       font-weight: 650;
     }
 
     .card p {
       color: var(--muted);
-      font-size: 0.93rem;
+      font-size: 0.94rem;
+      line-height: 1.6;
     }
 
     /* Stats */
     .stats {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
-      text-align: center;
+      gap: 1.15rem;
     }
 
     .stat-box {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 1.5rem 1rem;
+      padding: 1.6rem 1.2rem;
+      text-align: center;
       box-shadow: var(--shadow);
     }
 
     .stat-num {
-      font-size: 2.35rem;
+      font-size: 2.4rem;
       font-weight: 800;
       line-height: 1.1;
       letter-spacing: -0.5px;
@@ -285,22 +288,22 @@
     .stat-label {
       color: var(--muted);
       font-size: 0.88rem;
-      margin-top: 0.3rem;
+      margin-top: 0.35rem;
     }
 
     /* Badges */
     .badges {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.45rem;
+      gap: 0.5rem;
     }
 
     .badge {
-      padding: 0.38rem 0.85rem;
+      padding: 0.4rem 0.9rem;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 999px;
-      font-size: 0.83rem;
+      font-size: 0.84rem;
       color: var(--text);
       transition: border-color 0.2s, color 0.2s;
     }
@@ -310,10 +313,39 @@
       color: var(--accent);
     }
 
-    /* Blog - alıntı tarzı sol çizgi */
+    /* Hakkımda - artık zayıf değil */
+    .about-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.6rem 1.6rem 1.6rem 1.5rem;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .about-box::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 1.4rem;
+      bottom: 1.4rem;
+      width: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+      opacity: 0.7;
+    }
+
+    .about-box p {
+      color: var(--muted);
+      font-size: 1.02rem;
+      line-height: 1.7;
+      max-width: 620px;
+    }
+
+    /* Blog */
     .blog-item {
       position: relative;
-      padding: 1.15rem 0 1.15rem 1.1rem;
+      padding: 1.25rem 0 1.25rem 1.15rem;
       border-bottom: 1px solid var(--border);
     }
 
@@ -325,8 +357,8 @@
       content: "";
       position: absolute;
       left: 0;
-      top: 1.15rem;
-      bottom: 1.15rem;
+      top: 1.25rem;
+      bottom: 1.25rem;
       width: 3px;
       background: var(--accent);
       border-radius: 2px;
@@ -334,8 +366,8 @@
     }
 
     .blog-item h3 {
-      font-size: 1.1rem;
-      margin-bottom: 0.25rem;
+      font-size: 1.12rem;
+      margin-bottom: 0.3rem;
       transition: color 0.2s;
     }
 
@@ -344,34 +376,34 @@
     }
 
     .blog-meta {
-      font-size: 0.83rem;
+      font-size: 0.84rem;
       color: var(--muted);
-      margin-bottom: 0.35rem;
+      margin-bottom: 0.4rem;
     }
 
     .blog-item p {
       color: var(--muted);
-      font-size: 0.93rem;
+      font-size: 0.94rem;
     }
 
     /* Footer */
     footer {
-      padding: 2.75rem 0;
+      padding: 3rem 0;
       border-top: 1px solid var(--border);
       text-align: center;
     }
 
     .footer-brand {
       font-weight: 600;
-      margin-bottom: 1.1rem;
+      margin-bottom: 1.15rem;
       letter-spacing: 0.3px;
     }
 
     .socials {
       display: flex;
       justify-content: center;
-      gap: 1.1rem;
-      margin-bottom: 1.1rem;
+      gap: 1.15rem;
+      margin-bottom: 1.15rem;
     }
 
     .socials a {
@@ -390,7 +422,7 @@
     }
 
     .copy {
-      font-size: 0.83rem;
+      font-size: 0.84rem;
       color: var(--muted);
     }
 
@@ -440,10 +472,12 @@
     @media (max-width: 640px) {
       .stats {
         grid-template-columns: 1fr;
-        gap: 1.1rem;
       }
       .hero {
-        padding: 4.25rem 0 3rem;
+        padding: 4.75rem 0 3.5rem;
+      }
+      section {
+        padding: 2.75rem 0;
       }
     }
   </style>
@@ -494,12 +528,14 @@
   <main>
     <div class="container">
 
+      <!-- Hero -->
       <section class="hero" id="top">
         <h1>Doğanın Teknolojisi</h1>
         <p class="subtitle">Kanatların Matematiği & Yazılım</p>
         <p class="desc">Doğa araştırmacısı ve web geliştiricisiyim. Ekosistemlerin geleceğini kodluyor, arıların izinde dijital çözümler üretiyorum.</p>
       </section>
 
+      <!-- Ürünler -->
       <section id="urunler">
         <h2 class="section-title">Öne Çıkan Ürünler & Projeler</h2>
         <div class="grid">
@@ -518,6 +554,7 @@
         </div>
       </section>
 
+      <!-- Stats -->
       <section>
         <div class="stats">
           <div class="stat-box">
@@ -531,13 +568,17 @@
         </div>
       </section>
 
+      <!-- Hakkımda -->
       <section id="hakkimizda">
         <h2 class="section-title">Hakkımda</h2>
-        <p style="color: var(--muted); max-width: 580px;">
-          Doğadaki kusursuz geometriden ve arıların koloni zekâsından ilham alarak modern yazılım mimarileri geliştiriyorum. Hedefim; teknoloji ile biyoçeşitliliği buluşturan, sürdürülebilir sistemler inşa etmek.
-        </p>
+        <div class="about-box">
+          <p>
+            Doğadaki kusursuz geometriden ve arıların koloni zekâsından ilham alarak modern yazılım mimarileri geliştiriyorum. Hedefim; teknoloji ile biyoçeşitliliği buluşturan, sürdürülebilir sistemler inşa etmek.
+          </p>
+        </div>
       </section>
 
+      <!-- Teknolojiler -->
       <section>
         <h2 class="section-title">Kullanılan Teknolojiler</h2>
         <div class="badges">
@@ -550,6 +591,7 @@
         </div>
       </section>
 
+      <!-- Blog -->
       <section id="blog">
         <h2 class="section-title">Son Blog Yazıları</h2>
         <div class="blog-item">
