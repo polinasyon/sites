@@ -9,14 +9,14 @@
 
   <style>
     :root {
-      --bg: #0c0c0c;
-      --surface: #161616;
-      --surface-2: #1e1e1e;
-      --text: #e8e8e8;
-      --muted: #9ca3af;
-      --amber: #f59e0b;
-      --amber-soft: rgba(245, 158, 11, 0.15);
-      --border: rgba(255, 255, 255, 0.07);
+      --bg: #0b0f0d;
+      --surface: #151a17;
+      --surface-2: #1c231f;
+      --text: #e6ebe8;
+      --muted: #8b9a91;
+      --accent: #c9a227;
+      --accent-soft: rgba(201, 162, 39, 0.12);
+      --border: rgba(255, 255, 255, 0.06);
       --radius: 12px;
     }
 
@@ -34,12 +34,12 @@
       background: var(--bg);
       color: var(--text);
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      line-height: 1.6;
+      line-height: 1.65;
       -webkit-font-smoothing: antialiased;
     }
 
     .container {
-      max-width: 960px;
+      max-width: 920px;
       margin: 0 auto;
       padding: 0 1.25rem;
     }
@@ -49,7 +49,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(12, 12, 12, 0.92);
+      background: rgba(11, 15, 13, 0.94);
       border-bottom: 1px solid var(--border);
     }
 
@@ -57,33 +57,34 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 64px;
+      height: 62px;
     }
 
     .logo {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.55rem;
       font-weight: 700;
-      font-size: 1.15rem;
+      font-size: 1.12rem;
       color: var(--text);
       text-decoration: none;
+      letter-spacing: 0.2px;
     }
 
     .logo svg {
-      width: 26px;
-      height: 26px;
+      width: 24px;
+      height: 24px;
     }
 
     .nav-actions {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }
 
     .icon-btn {
-      width: 40px;
-      height: 40px;
+      width: 38px;
+      height: 38px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -97,13 +98,13 @@
 
     .icon-btn:hover {
       background: var(--surface-2);
-      border-color: rgba(245, 158, 11, 0.35);
-      color: var(--amber);
+      border-color: rgba(201, 162, 39, 0.3);
+      color: var(--accent);
     }
 
     .icon-btn svg {
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       stroke: currentColor;
       fill: none;
       stroke-width: 2;
@@ -118,17 +119,17 @@
 
     .dropdown-menu {
       position: absolute;
-      top: calc(100% + 10px);
+      top: calc(100% + 8px);
       left: 0;
-      width: 220px;
+      width: 210px;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 0.5rem;
+      padding: 0.4rem;
       opacity: 0;
       visibility: hidden;
-      transform: translateY(-6px);
-      transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+      transform: translateY(-4px);
+      transition: opacity 0.18s, transform 0.18s, visibility 0.18s;
       z-index: 200;
     }
 
@@ -139,133 +140,127 @@
     }
 
     .dropdown-item {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.7rem 0.85rem;
+      display: block;
+      padding: 0.65rem 0.85rem;
       color: var(--text);
       text-decoration: none;
-      font-size: 0.95rem;
+      font-size: 0.93rem;
       border-radius: 8px;
-      transition: background 0.15s;
+      transition: background 0.15s, color 0.15s;
     }
 
     .dropdown-item:hover {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.04);
     }
 
     .dropdown-item.astro {
-      color: var(--amber);
+      color: var(--accent);
     }
 
-    .dropdown-item svg {
-      width: 18px;
-      height: 18px;
-      stroke: currentColor;
-      opacity: 0.85;
-    }
-
-    /* Search Panel */
+    /* Search */
     .search-panel {
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.3s ease;
+      transition: max-height 0.28s ease;
       background: var(--surface);
       border-bottom: 1px solid transparent;
     }
 
     .search-panel.active {
-      max-height: 72px;
+      max-height: 68px;
       border-bottom-color: var(--border);
     }
 
     .search-panel-inner {
-      padding: 0.85rem 0;
+      padding: 0.75rem 0;
     }
 
     .search-input {
       width: 100%;
-      padding: 0.7rem 1rem;
+      padding: 0.65rem 0.95rem;
       background: var(--bg);
       border: 1px solid var(--border);
       border-radius: 8px;
       color: var(--text);
-      font-size: 0.95rem;
+      font-size: 0.93rem;
       outline: none;
       transition: border-color 0.2s;
     }
 
     .search-input:focus {
-      border-color: rgba(245, 158, 11, 0.5);
+      border-color: rgba(201, 162, 39, 0.45);
     }
 
     /* Sections */
     section {
-      padding: 3.5rem 0;
+      padding: 3.25rem 0;
     }
 
     .section-title {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       font-weight: 700;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.35rem;
+      letter-spacing: -0.2px;
     }
 
     /* Hero */
     .hero {
       text-align: center;
-      padding: 5.5rem 0 4rem;
+      padding: 5.25rem 0 3.75rem;
     }
 
     .hero h1 {
-      font-size: clamp(2rem, 5vw, 2.75rem);
+      font-size: clamp(1.9rem, 4.8vw, 2.6rem);
       font-weight: 800;
       line-height: 1.2;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.7rem;
+      letter-spacing: -0.4px;
     }
 
     .hero .subtitle {
-      font-size: 1.15rem;
-      color: var(--amber);
+      font-size: 1.1rem;
+      color: var(--accent);
       font-weight: 600;
-      margin-bottom: 1rem;
+      margin-bottom: 0.95rem;
     }
 
     .hero .desc {
-      max-width: 520px;
+      max-width: 480px;
       margin: 0 auto;
       color: var(--muted);
-      font-size: 1.05rem;
+      font-size: 1.02rem;
     }
 
     /* Cards */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.25rem;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.1rem;
     }
 
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 1.5rem;
+      padding: 1.4rem;
       transition: border-color 0.2s, transform 0.2s;
     }
 
     .card:hover {
-      border-color: rgba(245, 158, 11, 0.35);
+      border-color: rgba(201, 162, 39, 0.28);
       transform: translateY(-2px);
     }
 
     .card h3 {
-      color: var(--amber);
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
+      color: var(--accent);
+      font-size: 1.05rem;
+      margin-bottom: 0.45rem;
+      font-weight: 650;
     }
 
     .card p {
       color: var(--muted);
-      font-size: 0.95rem;
+      font-size: 0.93rem;
     }
 
     /* Stats */
@@ -277,42 +272,43 @@
     }
 
     .stat-num {
-      font-size: 2.5rem;
+      font-size: 2.35rem;
       font-weight: 800;
       line-height: 1.1;
+      letter-spacing: -0.5px;
     }
 
     .stat-label {
       color: var(--muted);
-      font-size: 0.9rem;
-      margin-top: 0.25rem;
+      font-size: 0.88rem;
+      margin-top: 0.3rem;
     }
 
     /* Badges */
     .badges {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
+      gap: 0.45rem;
     }
 
     .badge {
-      padding: 0.4rem 0.9rem;
+      padding: 0.38rem 0.85rem;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 999px;
-      font-size: 0.85rem;
+      font-size: 0.83rem;
       color: var(--text);
       transition: border-color 0.2s, color 0.2s;
     }
 
     .badge:hover {
-      border-color: rgba(245, 158, 11, 0.4);
-      color: var(--amber);
+      border-color: rgba(201, 162, 39, 0.35);
+      color: var(--accent);
     }
 
     /* Blog */
     .blog-item {
-      padding: 1.25rem 0;
+      padding: 1.15rem 0;
       border-bottom: 1px solid var(--border);
     }
 
@@ -321,43 +317,44 @@
     }
 
     .blog-item h3 {
-      font-size: 1.15rem;
-      margin-bottom: 0.3rem;
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
       transition: color 0.2s;
     }
 
     .blog-item h3:hover {
-      color: var(--amber);
+      color: var(--accent);
     }
 
     .blog-meta {
-      font-size: 0.85rem;
+      font-size: 0.83rem;
       color: var(--muted);
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.35rem;
     }
 
     .blog-item p {
       color: var(--muted);
-      font-size: 0.95rem;
+      font-size: 0.93rem;
     }
 
     /* Footer */
     footer {
-      padding: 3rem 0;
+      padding: 2.75rem 0;
       border-top: 1px solid var(--border);
       text-align: center;
     }
 
     .footer-brand {
       font-weight: 600;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.1rem;
+      letter-spacing: 0.3px;
     }
 
     .socials {
       display: flex;
       justify-content: center;
-      gap: 1rem;
-      margin-bottom: 1.25rem;
+      gap: 1.1rem;
+      margin-bottom: 1.1rem;
     }
 
     .socials a {
@@ -366,39 +363,39 @@
     }
 
     .socials a:hover {
-      color: var(--amber);
+      color: var(--accent);
     }
 
     .socials svg {
-      width: 20px;
-      height: 20px;
+      width: 19px;
+      height: 19px;
       fill: currentColor;
     }
 
     .copy {
-      font-size: 0.85rem;
+      font-size: 0.83rem;
       color: var(--muted);
     }
 
     /* Back to top */
     .back-top {
       position: fixed;
-      bottom: 1.5rem;
-      right: 1.5rem;
-      width: 42px;
-      height: 42px;
+      bottom: 1.4rem;
+      right: 1.4rem;
+      width: 40px;
+      height: 40px;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 50%;
-      color: var(--amber);
+      color: var(--accent);
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       opacity: 0;
       visibility: hidden;
-      transform: translateY(8px);
-      transition: opacity 0.25s, transform 0.25s, visibility 0.25s, background 0.2s;
+      transform: translateY(6px);
+      transition: opacity 0.22s, transform 0.22s, visibility 0.22s, background 0.2s;
       z-index: 90;
     }
 
@@ -409,26 +406,26 @@
     }
 
     .back-top:hover {
-      background: var(--amber);
-      color: #111;
-      border-color: var(--amber);
+      background: var(--accent);
+      color: #0b0f0d;
+      border-color: var(--accent);
     }
 
     .back-top svg {
-      width: 18px;
-      height: 18px;
+      width: 17px;
+      height: 17px;
       stroke: currentColor;
       stroke-width: 2.5;
       fill: none;
     }
 
-    /* Mobile */
     @media (max-width: 640px) {
       .stats {
         grid-template-columns: 1fr;
+        gap: 1.25rem;
       }
       .hero {
-        padding: 4.5rem 0 3rem;
+        padding: 4.25rem 0 3rem;
       }
     }
   </style>
@@ -454,9 +451,9 @@
 
         <a href="#top" class="logo">
           <svg viewBox="0 0 48 48" fill="none">
-            <path fill="#e8e8e8" d="M5.63 24l4.7-8.14h9.4L24.42 24l-4.7 8.14h-9.4z"/>
-            <path fill="#f59e0b" d="M23.58 13.64L28.27 5.5h9.4l4.7 8.14-4.7 8.14h-9.4z"/>
-            <path fill="#f59e0b" d="M23.58 34.36l4.7-8.14h9.4l4.7 8.14-4.7 8.14h-9.4z"/>
+            <path fill="#e6ebe8" d="M5.63 24l4.7-8.14h9.4L24.42 24l-4.7 8.14h-9.4z"/>
+            <path fill="#c9a227" d="M23.58 13.64L28.27 5.5h9.4l4.7 8.14-4.7 8.14h-9.4z"/>
+            <path fill="#c9a227" d="M23.58 34.36l4.7-8.14h9.4l4.7 8.14-4.7 8.14h-9.4z"/>
           </svg>
           Polinasyon
         </a>
@@ -479,14 +476,12 @@
   <main>
     <div class="container">
 
-      <!-- Hero -->
       <section class="hero" id="top">
         <h1>Doğanın Teknolojisi</h1>
         <p class="subtitle">Kanatların Matematiği & Yazılım</p>
         <p class="desc">Doğa araştırmacısı ve web geliştiricisiyim. Ekosistemlerin geleceğini kodluyor, arıların izinde dijital çözümler üretiyorum.</p>
       </section>
 
-      <!-- Ürünler -->
       <section id="urunler">
         <h2 class="section-title">Öne Çıkan Ürünler & Projeler</h2>
         <div class="grid">
@@ -505,7 +500,6 @@
         </div>
       </section>
 
-      <!-- Stats -->
       <section>
         <div class="stats">
           <div>
@@ -519,15 +513,13 @@
         </div>
       </section>
 
-      <!-- Hakkımda -->
       <section id="hakkimizda">
         <h2 class="section-title">Hakkımda</h2>
-        <p style="color: var(--muted); max-width: 640px;">
+        <p style="color: var(--muted); max-width: 580px;">
           Doğadaki kusursuz geometriden ve arıların koloni zekâsından ilham alarak modern yazılım mimarileri geliştiriyorum. Hedefim; teknoloji ile biyoçeşitliliği buluşturan, sürdürülebilir sistemler inşa etmek.
         </p>
       </section>
 
-      <!-- Teknolojiler -->
       <section>
         <h2 class="section-title">Kullanılan Teknolojiler</h2>
         <div class="badges">
@@ -540,7 +532,6 @@
         </div>
       </section>
 
-      <!-- Blog -->
       <section id="blog">
         <h2 class="section-title">Son Blog Yazıları</h2>
         <div class="blog-item">
@@ -575,7 +566,6 @@
   </button>
 
   <script>
-    // Dropdown
     const dropdown = document.getElementById('dropdown');
     const menuBtn = document.getElementById('menuBtn');
     menuBtn.addEventListener('click', (e) => {
@@ -584,21 +574,19 @@
     });
     document.addEventListener('click', () => dropdown.classList.remove('open'));
 
-    // Search
     const searchBtn = document.getElementById('searchBtn');
     const searchPanel = document.getElementById('searchPanel');
     const searchInput = document.getElementById('searchInput');
     searchBtn.addEventListener('click', () => {
       searchPanel.classList.toggle('active');
       if (searchPanel.classList.contains('active')) {
-        setTimeout(() => searchInput.focus(), 50);
+        setTimeout(() => searchInput.focus(), 40);
       }
     });
 
-    // Back to top
     const backTop = document.getElementById('backTop');
     window.addEventListener('scroll', () => {
-      backTop.classList.toggle('visible', window.scrollY > 300);
+      backTop.classList.toggle('visible', window.scrollY > 280);
     });
     backTop.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
